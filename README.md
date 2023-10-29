@@ -67,6 +67,7 @@
 
 # Видео о создании
 [Фотоальбом на C# (часть 1)](https://boosty.to/calabonga/posts/74dbba15-6e6d-4fbf-b480-171883e5b9e8)
+[Фотоальбом на C# (часть 2)](https://boosty.to/calabonga/posts/bdc392a3-1a21-44e5-b6ba-5b897a83673c)
 
 
 
