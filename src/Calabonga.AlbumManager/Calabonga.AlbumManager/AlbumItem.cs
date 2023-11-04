@@ -10,4 +10,8 @@ public class AlbumItem
     public string? Description { get; set; }
 
     public long FileSize { get; set; }
+
+    public string? DirectoryName { get; set; }
+
+    public IEnumerable<AlbumItem>? Items { get; set; }
 }

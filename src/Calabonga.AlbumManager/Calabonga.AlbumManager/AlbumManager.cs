@@ -1,5 +1,6 @@
-﻿using System.Text;
-using Calabonga.AlbumsManager.Base;
+﻿using Calabonga.AlbumsManager.Base;
+using Calabonga.AlbumsManager.Viewers;
+using System.Text;
 
 namespace Calabonga.AlbumsManager;
 
@@ -8,13 +9,7 @@ namespace Calabonga.AlbumsManager;
 /// </summary>
 public sealed class AlbumManager
 {
-    private readonly AlbumCreatorBase _albumCreator;
-
-    internal AlbumManager(AlbumCreatorBase albumCreator)
-    {
-        _albumCreator = albumCreator;
-        Items = _albumCreator.GetItems();
-    }
+    internal AlbumManager(IEnumerable<AlbumItem> items) => Items = items.ToList();
 
     private List<AlbumItem> Items { get; }
 
@@ -22,14 +17,10 @@ public sealed class AlbumManager
     {
         var stringBuilder = new StringBuilder("AlbumManager Configuration");
         stringBuilder.AppendLine();
-        stringBuilder.AppendLine($"AlbumCreator: {_albumCreator.GetType().Name}");
         stringBuilder.AppendLine($"Total Items: {Items.Count}");
 
         return stringBuilder.ToString();
     }
 
-    public IImageView GetView()
-    {
-        return new DefaultImageView(Items);
-    }
+    public IImageView GetView() => new DefaultImageView(Items);
 }

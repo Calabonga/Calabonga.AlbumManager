@@ -3,7 +3,12 @@
 /// <summary>
 /// Default creator functionality for images
 /// </summary>
-public abstract class AlbumCreatorBase
+public abstract class AlbumCreatorBase<TConfiguration> : ICreator
 {
-    public abstract List<AlbumItem> GetItems();
+    protected AlbumCreatorBase(TConfiguration configuration)
+        => Configuration = configuration;
+
+    public TConfiguration Configuration { get; }
+
+    public abstract IEnumerable<AlbumItem> GetItems();
 }

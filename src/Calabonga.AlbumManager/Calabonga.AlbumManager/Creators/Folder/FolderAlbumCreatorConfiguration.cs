@@ -1,4 +1,4 @@
-﻿namespace Calabonga.AlbumsManager;
+﻿namespace Calabonga.AlbumsManager.Creators.Folder;
 
 /// <summary>
 /// // Calabonga: update summary (2023-10-28 10:13 FolderAlbumCreatorConfiguration)
