@@ -69,6 +69,7 @@
 
 1. [Фотоальбом на C# (часть 1)](https://boosty.to/calabonga/posts/74dbba15-6e6d-4fbf-b480-171883e5b9e8)
 2. [Фотоальбом на C# (часть 2)](https://boosty.to/calabonga/posts/bdc392a3-1a21-44e5-b6ba-5b897a83673c)
+3. [Фотоальбом на C# (часть 3)](https://boosty.to/calabonga/posts/e3ca83a6-757d-41d7-b83e-d02e9f05d8be)
 
 
 
