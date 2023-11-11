@@ -1,6 +1,6 @@
 ﻿using Calabonga.AlbumsManager.Base;
 
-namespace Calabonga.AlbumsManager;
+namespace Calabonga.AlbumsManager.Viewers;
 
 /// <summary>
 /// // Calabonga: update summary (2023-10-28 11:26 DefaultImageView)
