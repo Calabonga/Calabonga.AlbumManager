@@ -9,7 +9,7 @@ public class AlbumManagerBuilder
 {
     private ICreator _creator = null!;
 
-    public AlbumManagerViewerBuilder AddCreator<TCreator, TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
+    public IAlbumManagerViewerBuilder AddCreator<TCreator, TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
         where TCreator : AlbumCreatorBase<TCreatorConfiguration>
         where TCreatorConfiguration : class, new()
     {

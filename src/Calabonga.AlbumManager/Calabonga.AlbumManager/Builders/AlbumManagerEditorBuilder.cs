@@ -2,13 +2,18 @@
 
 namespace Calabonga.AlbumsManager.Builders;
 
-public class AlbumManagerEditorBuilder
+public interface IAlbumManagerEditorBuilder
+{
+    IAlbumManagerUploaderBuilder AddEditor<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration);
+}
+
+internal class AlbumManagerEditorBuilder : IAlbumManagerEditorBuilder
 {
     private readonly ICreator _creator;
 
     public AlbumManagerEditorBuilder(ICreator creator) => _creator = creator;
 
-    public AlbumManagerUploaderBuilder AddEditor<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
+    public IAlbumManagerUploaderBuilder AddEditor<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
     {
         return new AlbumManagerUploaderBuilder(_creator);
     }

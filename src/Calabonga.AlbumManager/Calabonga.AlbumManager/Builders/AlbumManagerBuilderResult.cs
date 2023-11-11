@@ -2,7 +2,12 @@
 
 namespace Calabonga.AlbumsManager.Builders;
 
-public class AlbumManagerBuilderResult
+public interface IAlbumManagerBuilderResult
+{
+    AlbumManager Build();
+}
+
+internal class AlbumManagerBuilderResult : IAlbumManagerBuilderResult
 {
     private readonly ICreator _creator;
 

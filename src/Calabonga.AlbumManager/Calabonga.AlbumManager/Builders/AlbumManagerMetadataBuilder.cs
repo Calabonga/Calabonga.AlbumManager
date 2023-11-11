@@ -2,13 +2,18 @@
 
 namespace Calabonga.AlbumsManager.Builders;
 
-public class AlbumManagerMetadataBuilder
+public interface IAlbumManagerMetadataBuilder
+{
+    IAlbumManagerEditorBuilder AddMetadataReader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration);
+}
+
+internal class AlbumManagerMetadataBuilder : IAlbumManagerMetadataBuilder
 {
     private readonly ICreator _creator;
 
     public AlbumManagerMetadataBuilder(ICreator creator) => _creator = creator;
 
-    public AlbumManagerEditorBuilder AddMetadataReader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
+    public IAlbumManagerEditorBuilder AddMetadataReader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
     {
         return new AlbumManagerEditorBuilder(_creator);
     }
