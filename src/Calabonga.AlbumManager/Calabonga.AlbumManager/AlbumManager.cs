@@ -11,6 +11,9 @@ public sealed class AlbumManager
 {
     internal AlbumManager(IEnumerable<AlbumItem> items) => Items = items.ToList();
 
+    /// <summary>
+    /// Collected images
+    /// </summary>
     private List<AlbumItem> Items { get; }
 
     public override string ToString()
