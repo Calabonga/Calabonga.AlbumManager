@@ -5,9 +5,9 @@ namespace Calabonga.AlbumsManager.Creators.FolderTree;
 /// <summary>
 /// // Calabonga: update summary (2023-10-28 10:26 FolderAlbumCreator)
 /// </summary>
-public class FolderTreeAlbumCreator : AlbumCreatorBase<FolderTreeAlbumCreatorConfiguration>
+public sealed class FolderTreeAlbumManagerCreator : AlbumManagerCreatorBase<FolderTreeAlbumCreatorConfiguration>
 {
-    public FolderTreeAlbumCreator(FolderTreeAlbumCreatorConfiguration configuration)
+    public FolderTreeAlbumManagerCreator(FolderTreeAlbumCreatorConfiguration configuration)
         : base(configuration) { }
 
     public override List<AlbumItem> GetItems()

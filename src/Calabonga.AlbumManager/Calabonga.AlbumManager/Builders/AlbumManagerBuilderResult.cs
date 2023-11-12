@@ -13,15 +13,15 @@ public interface IAlbumManagerBuilderResult
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerBuilderResult)
 /// </summary>
-internal class AlbumManagerBuilderResult : IAlbumManagerBuilderResult
+internal sealed class AlbumManagerBuilderResult : IAlbumManagerBuilderResult
 {
-    private readonly ICreator _creator;
+    private readonly IAlbumManagerCreator _albumManagerCreator;
 
-    public AlbumManagerBuilderResult(ICreator creator) => _creator = creator;
+    public AlbumManagerBuilderResult(IAlbumManagerCreator albumManagerCreator) => _albumManagerCreator = albumManagerCreator;
 
     public AlbumManager Build()
     {
-        var items = _creator.GetItems();
+        var items = _albumManagerCreator.GetItems();
         var manager = new AlbumManager(items);
         return manager;
     }

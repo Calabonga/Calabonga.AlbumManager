@@ -3,9 +3,9 @@
 /// <summary>
 /// Default creator functionality for images
 /// </summary>
-public abstract class AlbumCreatorBase<TConfiguration> : ICreator
+public abstract class AlbumManagerCreatorBase<TConfiguration> : IAlbumManagerCreator
 {
-    protected AlbumCreatorBase(TConfiguration configuration)
+    protected AlbumManagerCreatorBase(TConfiguration configuration)
         => Configuration = configuration;
 
     /// <summary>

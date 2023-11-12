@@ -18,14 +18,14 @@ public interface IAlbumManagerMetadataBuilder
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:16 AlbumManagerMetadataBuilder)
 /// </summary>
-internal class AlbumManagerMetadataBuilder : IAlbumManagerMetadataBuilder
+internal sealed class AlbumManagerMetadataBuilder : IAlbumManagerMetadataBuilder
 {
-    private readonly ICreator _creator;
+    private readonly IAlbumManagerCreator _albumManagerCreator;
 
-    public AlbumManagerMetadataBuilder(ICreator creator) => _creator = creator;
+    public AlbumManagerMetadataBuilder(IAlbumManagerCreator albumManagerCreator) => _albumManagerCreator = albumManagerCreator;
 
     public IAlbumManagerEditorBuilder AddMetadataReader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
     {
-        return new AlbumManagerEditorBuilder(_creator);
+        return new AlbumManagerEditorBuilder(_albumManagerCreator);
     }
 }
