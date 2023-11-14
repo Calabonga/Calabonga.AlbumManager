@@ -7,10 +7,7 @@ namespace Calabonga.AlbumsManager.Viewers;
 /// </summary>
 public class DefaultImageView : IImageView
 {
-    public DefaultImageView(IEnumerable<AlbumItem> items)
-    {
-        Items = items;
-    }
+    public DefaultImageView(IEnumerable<AlbumItem> items) => Items = items;
 
     public IEnumerable<AlbumItem> Items { get; }
 }
