@@ -18,14 +18,14 @@ public interface IAlbumManagerEditorBuilder
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerEditorBuilder)
 /// </summary>
-internal class AlbumManagerEditorBuilder : IAlbumManagerEditorBuilder
+internal sealed class AlbumManagerEditorBuilder : IAlbumManagerEditorBuilder
 {
-    private readonly ICreator _creator;
+    private readonly IAlbumManagerCreator _albumManagerCreator;
 
-    public AlbumManagerEditorBuilder(ICreator creator) => _creator = creator;
+    public AlbumManagerEditorBuilder(IAlbumManagerCreator albumManagerCreator) => _albumManagerCreator = albumManagerCreator;
 
     public IAlbumManagerUploaderBuilder AddEditor<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
     {
-        return new AlbumManagerUploaderBuilder(_creator);
+        return new AlbumManagerUploaderBuilder(_albumManagerCreator);
     }
 }

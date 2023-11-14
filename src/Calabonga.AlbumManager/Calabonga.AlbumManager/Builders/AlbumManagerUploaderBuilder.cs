@@ -18,14 +18,14 @@ public interface IAlbumManagerUploaderBuilder
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerUploaderBuilder)
 /// </summary>
-internal class AlbumManagerUploaderBuilder : IAlbumManagerUploaderBuilder
+internal sealed class AlbumManagerUploaderBuilder : IAlbumManagerUploaderBuilder
 {
-    private readonly ICreator _creator;
+    private readonly IAlbumManagerCreator _albumManagerCreator;
 
-    public AlbumManagerUploaderBuilder(ICreator creator) => _creator = creator;
+    public AlbumManagerUploaderBuilder(IAlbumManagerCreator albumManagerCreator) => _albumManagerCreator = albumManagerCreator;
 
     public IAlbumManagerBuilderResult AddUploader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
     {
-        return new AlbumManagerBuilderResult(_creator);
+        return new AlbumManagerBuilderResult(_albumManagerCreator);
     }
 }

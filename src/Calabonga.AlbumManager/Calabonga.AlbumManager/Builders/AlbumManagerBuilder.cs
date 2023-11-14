@@ -5,18 +5,18 @@ namespace Calabonga.AlbumsManager.Builders;
 /// <summary>
 /// Configuration builder for <see cref="AlbumManager"/>
 /// </summary>
-public class AlbumManagerBuilder
+public sealed class AlbumManagerBuilder<TCreator>
+    where TCreator : IAlbumManagerCreator
 {
-    private ICreator _creator = null!;
+    private IAlbumManagerCreator _albumManagerCreator = null!;
 
-    public IAlbumManagerViewerBuilder AddCreator<TCreator, TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
-        where TCreator : AlbumCreatorBase<TCreatorConfiguration>
+    public IAlbumManagerViewerBuilder AddCreator<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
         where TCreatorConfiguration : class, new()
     {
         var config = new TCreatorConfiguration();
         configuration(config);
-        _creator = (AlbumCreatorBase<TCreatorConfiguration>)Activator.CreateInstance(typeof(TCreator), config)!;
+        _albumManagerCreator = (AlbumManagerCreatorBase<TCreatorConfiguration>)Activator.CreateInstance(typeof(TCreator), config)!;
 
-        return new AlbumManagerViewerBuilder(_creator);
+        return new AlbumManagerViewerBuilder(_albumManagerCreator);
     }
 }
