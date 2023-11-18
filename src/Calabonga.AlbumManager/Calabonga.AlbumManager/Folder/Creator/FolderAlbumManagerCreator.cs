@@ -1,6 +1,8 @@
-﻿using Calabonga.AlbumsManager.Base;
+﻿using Calabonga.AlbumsManager.Builders.Base;
+using Calabonga.AlbumsManager.Folder.Configurations;
+using Calabonga.AlbumsManager.Models;
 
-namespace Calabonga.AlbumsManager.Creators.Folder;
+namespace Calabonga.AlbumsManager.Folder.Creator;
 
 /// <summary>
 /// // Calabonga: update summary (2023-10-28 10:26 FolderAlbumCreator)
@@ -10,6 +12,10 @@ public sealed class FolderAlbumManagerCreator : AlbumManagerCreatorBase<FolderAl
     public FolderAlbumManagerCreator(FolderAlbumCreatorConfiguration configuration)
         : base(configuration) { }
 
+    /// <summary>
+    /// Returns a collection for <see cref="AlbumItem"/> found in location provided
+    /// </summary>
+    /// <returns></returns>
     public override List<AlbumItem> GetItems()
     {
         if (!Path.Exists(Configuration.SourcePath))

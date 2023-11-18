@@ -1,4 +1,4 @@
-﻿namespace Calabonga.AlbumsManager.Base;
+﻿namespace Calabonga.AlbumsManager.Builders.Base;
 
 /// <summary>
 /// Default viewer functionality for images

@@ -1,31 +1,26 @@
-﻿using Calabonga.AlbumsManager.Base;
+﻿using Calabonga.AlbumsManager.Builders.Base;
 
 namespace Calabonga.AlbumsManager.Builders;
-
-/// <summary>
-/// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerMetadataBuilder) 
-/// </summary>
-public interface IAlbumManagerMetadataBuilder
-{
-    /// <summary>
-    /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerMetadataBuilder)
-    /// </summary>
-    /// <typeparam name="TCreatorConfiguration"></typeparam>
-    /// <param name="configuration"></param>
-    IAlbumManagerEditorBuilder AddMetadataReader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration);
-}
 
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:16 AlbumManagerMetadataBuilder)
 /// </summary>
 internal sealed class AlbumManagerMetadataBuilder : IAlbumManagerMetadataBuilder
 {
+    private readonly IConfiguration _configuration;
     private readonly IAlbumManagerCreator _albumManagerCreator;
 
-    public AlbumManagerMetadataBuilder(IAlbumManagerCreator albumManagerCreator) => _albumManagerCreator = albumManagerCreator;
-
-    public IAlbumManagerEditorBuilder AddMetadataReader<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
+    public AlbumManagerMetadataBuilder(IConfiguration configuration, IAlbumManagerCreator albumManagerCreator)
     {
-        return new AlbumManagerEditorBuilder(_albumManagerCreator);
+        _configuration = configuration;
+        _albumManagerCreator = albumManagerCreator;
     }
+
+    public IAlbumManagerEditorBuilder AddMetadataReader(Action<IMetadataConfiguration> configuration)
+    {
+        configuration(_configuration.MetadataConfiguration);
+        return new AlbumManagerEditorBuilder(_configuration, _albumManagerCreator);
+    }
+
+
 }

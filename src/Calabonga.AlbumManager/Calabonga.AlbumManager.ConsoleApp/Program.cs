@@ -1,18 +1,17 @@
 ﻿using Calabonga.AlbumsManager.Builders;
-using Calabonga.AlbumsManager.Configurations;
-using Calabonga.AlbumsManager.Creators.Folder;
+using Calabonga.AlbumsManager.Folder.Configurations;
+using Calabonga.AlbumsManager.Folder.Creator;
 
 //builder.AddCreator<FolderTreeAlbumCreator, FolderTreeAlbumCreatorConfiguration>(x => x.SourceRootPath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Gallery");
 //var manager1 = new AlbumManagerBuilder().AddDefaultFolder("C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Gallery");
 
-var builder = new AlbumManagerBuilder<FolderAlbumManagerCreator>()
-    .AddCreator<FolderAlbumCreatorConfiguration>(x => x.SourcePath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Animals")
-    .AddViewer<FolderAlbumViewerConfiguration>(x => x.TakeTop = 10)
-    .AddMetadataReader<FolderAlbumMetadataReaderConfiguration>(x => x.Enabled = false)
-    .AddEditor<FolderAlbumEditorConfiguration>(x => x.Enabled = false)
-    .AddUploader<FolderAlbumUploaderConfiguration>(x => x.Enabled = false);
-
-var manager = builder.Build();
+var manager = new AlbumManagerBuilder<FolderAlbumManagerCreator, FolderAlbumConfiguration>()
+    .AddCreator(x => x.SourcePath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Animals")
+    .AddViewer(x => x.TakeTop = 10)
+    .AddMetadataReader(x => x.Enabled = false)
+    .AddEditor(x => x.Enabled = false)
+    .AddUploader(x => x.Enabled = false)
+    .Build();
 
 Console.WriteLine(manager.ToString());
 

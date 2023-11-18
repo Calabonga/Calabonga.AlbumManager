@@ -1,4 +1,6 @@
-﻿namespace Calabonga.AlbumsManager.Base;
+﻿using Calabonga.AlbumsManager.Models;
+
+namespace Calabonga.AlbumsManager.Builders.Base;
 
 /// <summary>
 /// Default creator functionality for images
