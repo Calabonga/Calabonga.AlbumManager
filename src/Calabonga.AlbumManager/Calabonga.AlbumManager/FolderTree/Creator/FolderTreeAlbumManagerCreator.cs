@@ -1,6 +1,8 @@
-﻿using Calabonga.AlbumsManager.Base;
+﻿using Calabonga.AlbumsManager.Builders.Base;
+using Calabonga.AlbumsManager.FolderTree.Configurations;
+using Calabonga.AlbumsManager.Models;
 
-namespace Calabonga.AlbumsManager.Creators.FolderTree;
+namespace Calabonga.AlbumsManager.FolderTree.Creator;
 
 /// <summary>
 /// // Calabonga: update summary (2023-10-28 10:26 FolderAlbumCreator)

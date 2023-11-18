@@ -1,31 +1,24 @@
-﻿using Calabonga.AlbumsManager.Base;
+﻿using Calabonga.AlbumsManager.Builders.Base;
 
 namespace Calabonga.AlbumsManager.Builders;
 
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerEditorBuilder)
 /// </summary>
-public interface IAlbumManagerEditorBuilder
-{
-    /// <summary>
-    /// calabonga
-    /// </summary>
-    /// <typeparam name="TCreatorConfiguration"></typeparam>
-    /// <param name="configuration"></param>
-    IAlbumManagerUploaderBuilder AddEditor<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration);
-}
-
-/// <summary>
-/// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerEditorBuilder)
-/// </summary>
 internal sealed class AlbumManagerEditorBuilder : IAlbumManagerEditorBuilder
 {
+    private readonly IConfiguration _configuration;
     private readonly IAlbumManagerCreator _albumManagerCreator;
 
-    public AlbumManagerEditorBuilder(IAlbumManagerCreator albumManagerCreator) => _albumManagerCreator = albumManagerCreator;
-
-    public IAlbumManagerUploaderBuilder AddEditor<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
+    public AlbumManagerEditorBuilder(IConfiguration configuration, IAlbumManagerCreator albumManagerCreator)
     {
-        return new AlbumManagerUploaderBuilder(_albumManagerCreator);
+        _configuration = configuration;
+        _albumManagerCreator = albumManagerCreator;
+    }
+
+    public IAlbumManagerUploaderBuilder AddEditor(Action<IEditorConfiguration> configuration)
+    {
+        configuration(_configuration.EditorConfiguration);
+        return new AlbumManagerUploaderBuilder(_configuration, _albumManagerCreator);
     }
 }

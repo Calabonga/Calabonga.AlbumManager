@@ -1,12 +1,12 @@
-﻿namespace Calabonga.AlbumsManager.Creators.Folder;
+﻿namespace Calabonga.AlbumsManager.FolderTree.Configurations;
 
 /// <summary>
 /// // Calabonga: update summary (2023-10-28 10:13 FolderAlbumCreatorConfiguration)
 /// </summary>
-public class FolderAlbumCreatorConfiguration
+public class FolderTreeAlbumCreatorConfiguration
 {
     /// <summary>
     /// Source where images live
     /// </summary>
-    public string SourcePath { get; set; } = null!;
+    public string SourceRootPath { get; set; } = null!;
 }

@@ -1,5 +1,5 @@
-﻿using Calabonga.AlbumsManager.Base;
-using Calabonga.AlbumsManager.Viewers;
+﻿using Calabonga.AlbumsManager.Builders.Base;
+using Calabonga.AlbumsManager.Models;
 using System.Text;
 
 namespace Calabonga.AlbumsManager;
