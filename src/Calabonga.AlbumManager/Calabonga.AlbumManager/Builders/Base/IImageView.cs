@@ -1,14 +1,13 @@
-﻿using Calabonga.AlbumsManager.Models;
-
-namespace Calabonga.AlbumsManager.Builders.Base;
+﻿namespace Calabonga.AlbumsManager.Builders.Base;
 
 /// <summary>
 /// Represents a view for items that can be processed before show in <see cref="AlbumManager"/>
 /// </summary>
-public interface IImageView
+public interface IImageView<TItem>
+
 {
     /// <summary>
     /// Returns items prepared for view
     /// </summary>
-    IEnumerable<AlbumItem> Items { get; }
+    IEnumerable<TItem> Items { get; }
 }

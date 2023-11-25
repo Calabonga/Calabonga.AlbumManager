@@ -1,11 +1,11 @@
 ﻿using Calabonga.AlbumsManager.Builders.Base;
 
-namespace Calabonga.AlbumsManager.Folder.Configurations;
+namespace Calabonga.AlbumsManager.Configurations;
 
 /// <summary>
 /// Configuration for Editor processing in Folder mode
 /// </summary>
-public class FolderAlbumEditorConfiguration : IEditorConfiguration
+public class EditorConfiguration : IEditorConfiguration
 {
     /// <summary>
     /// Indicates that processing in Editor is enabled 

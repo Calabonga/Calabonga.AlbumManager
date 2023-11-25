@@ -5,20 +5,21 @@ namespace Calabonga.AlbumsManager.Builders;
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerViewerBuilder)
 /// </summary>
-internal sealed class AlbumManagerViewerBuilder : IAlbumManagerViewerBuilder
+internal sealed class ViewerBuilder<TItem> : IViewerBuilder<TItem>
+    where TItem : class
 {
     private readonly IConfiguration _configuration;
-    private readonly IAlbumManagerCreator _albumManagerCreator;
+    private readonly IAlbumBuilder<TItem> _albumBuilder;
 
-    public AlbumManagerViewerBuilder(IConfiguration configuration, IAlbumManagerCreator albumManagerCreator)
+    public ViewerBuilder(IConfiguration configuration, IAlbumBuilder<TItem> albumBuilder)
     {
         _configuration = configuration;
-        _albumManagerCreator = albumManagerCreator;
+        _albumBuilder = albumBuilder;
     }
 
-    public IAlbumManagerMetadataBuilder AddViewer(Action<IViewerConfiguration> configuration)
+    public IMetadataBuilder<TItem> AddViewer(Action<IViewerConfiguration> configuration)
     {
         configuration(_configuration.ViewerConfiguration);
-        return new AlbumManagerMetadataBuilder(_configuration, _albumManagerCreator);
+        return new MetadataBuilder<TItem>(_configuration, _albumBuilder);
     }
 }

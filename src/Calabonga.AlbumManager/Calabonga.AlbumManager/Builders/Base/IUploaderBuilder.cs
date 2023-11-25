@@ -3,11 +3,11 @@
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:16 AlbumManagerUploaderBuilder)
 /// </summary>
-public interface IAlbumManagerUploaderBuilder
+public interface IUploaderBuilder<TItem>
 {
     /// <summary>
     /// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerUploaderBuilder)
     /// </summary>
     /// <param name="configuration"></param>
-    IFinalBuilder AddUploader(Action<IUploaderConfiguration> configuration);
+    IFinalBuilder<TItem> AddUploader(Action<IUploaderConfiguration> configuration);
 }

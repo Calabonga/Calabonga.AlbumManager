@@ -3,11 +3,11 @@
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerViewerBuilder)
 /// </summary>
-public interface IAlbumManagerViewerBuilder
+public interface IViewerBuilder<TItem>
 {
     /// <summary>
     /// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerViewerBuilder) 
     /// </summary>
     /// <param name="configuration"></param>
-    IAlbumManagerMetadataBuilder AddViewer(Action<IViewerConfiguration> configuration);
+    IMetadataBuilder<TItem> AddViewer(Action<IViewerConfiguration> configuration);
 }

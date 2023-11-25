@@ -1,11 +1,11 @@
 ﻿using Calabonga.AlbumsManager.Builders.Base;
 
-namespace Calabonga.AlbumsManager.Folder.Configurations;
+namespace Calabonga.AlbumsManager.Configurations;
 
 /// <summary>
 /// Configuration for Viewer processing in Folder mode
 /// </summary>
-public class FolderAlbumViewerConfiguration : IViewerConfiguration
+public class ViewerConfiguration : IViewerConfiguration
 {
     /// <summary>
     /// How many items should be taken when view created

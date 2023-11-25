@@ -1,5 +1,5 @@
 ﻿using Calabonga.AlbumsManager.Builders.Base;
-using Calabonga.AlbumsManager.FolderTree.Configurations;
+using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager.FolderTree.Creator;
@@ -7,22 +7,21 @@ namespace Calabonga.AlbumsManager.FolderTree.Creator;
 /// <summary>
 /// // Calabonga: update summary (2023-10-28 10:26 FolderAlbumCreator)
 /// </summary>
-public sealed class FolderTreeAlbumManagerCreator : AlbumManagerCreatorBase<FolderTreeAlbumCreatorConfiguration>
+public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<CreatorConfiguration, AlbumDirectory>
 {
-    public FolderTreeAlbumManagerCreator(FolderTreeAlbumCreatorConfiguration configuration)
+    public FolderTreeAlbumBuilder(CreatorConfiguration configuration)
         : base(configuration) { }
 
-    public override List<AlbumItem> GetItems()
+    public override List<AlbumDirectory> GetItems()
     {
-        var result = new List<AlbumItem>();
-
-        if (!Path.Exists(Configuration.SourceRootPath))
+        var result = new List<AlbumDirectory>();
+        if (!Path.Exists(Configuration.SourcePath))
         {
             // Calabonga: log info about no path found (2023-10-28 11:03 FolderAlbumCreator)
-            return new List<AlbumItem>();
+            return new List<AlbumDirectory>();
         }
 
-        var directoryInfo = new DirectoryInfo(Configuration.SourceRootPath);
+        var directoryInfo = new DirectoryInfo(Configuration.SourcePath);
 
         var directories = directoryInfo.GetDirectories();
 
@@ -39,7 +38,7 @@ public sealed class FolderTreeAlbumManagerCreator : AlbumManagerCreatorBase<Fold
             if (!fileInfos.Any())
             {
                 // Calabonga: log files not found or empty (2023-11-04 09:24 FolderTreeAlbumCreator)
-                result.Add(new AlbumItem
+                result.Add(new AlbumDirectory
                 {
                     Description = "Files not found in directory",
                     DirectoryName = directory.Name
@@ -55,7 +54,7 @@ public sealed class FolderTreeAlbumManagerCreator : AlbumManagerCreatorBase<Fold
                 FileSize = x.Length
             }).ToList();
 
-            result.Add(new AlbumItem
+            result.Add(new AlbumDirectory()
             {
                 Items = files,
                 Description = $"Total files in directory: {files.Count}",

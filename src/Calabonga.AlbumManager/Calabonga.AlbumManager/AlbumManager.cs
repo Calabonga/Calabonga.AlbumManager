@@ -1,29 +1,18 @@
 ﻿using Calabonga.AlbumsManager.Builders.Base;
-using Calabonga.AlbumsManager.Models;
-using System.Text;
 
 namespace Calabonga.AlbumsManager;
 
 /// <summary>
 /// Photo and images Manager with some helpful processing
 /// </summary>
-public sealed class AlbumManager
+public sealed class AlbumManager<TItem>
 {
-    internal AlbumManager(IEnumerable<AlbumItem> items) => Items = items.ToList();
+    internal AlbumManager(IEnumerable<TItem> items) => Items = items.ToList();
 
     /// <summary>
     /// Collected images
     /// </summary>
-    private List<AlbumItem> Items { get; }
+    private List<TItem> Items { get; }
 
-    public override string ToString()
-    {
-        var stringBuilder = new StringBuilder("AlbumManager Configuration");
-        stringBuilder.AppendLine();
-        stringBuilder.AppendLine($"Total Items: {Items.Count}");
-
-        return stringBuilder.ToString();
-    }
-
-    public IImageView GetView() => new DefaultImageView(Items);
+    public IImageView<TItem> GetView() => new DefaultImageView<TItem>(Items);
 }

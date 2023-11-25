@@ -5,20 +5,21 @@ namespace Calabonga.AlbumsManager.Builders;
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerEditorBuilder)
 /// </summary>
-internal sealed class AlbumManagerEditorBuilder : IAlbumManagerEditorBuilder
+internal sealed class EditorBuilder<TItem> : IEditorBuilder<TItem>
+    where TItem : class
 {
     private readonly IConfiguration _configuration;
-    private readonly IAlbumManagerCreator _albumManagerCreator;
+    private readonly IAlbumBuilder<TItem> _albumBuilder;
 
-    public AlbumManagerEditorBuilder(IConfiguration configuration, IAlbumManagerCreator albumManagerCreator)
+    public EditorBuilder(IConfiguration configuration, IAlbumBuilder<TItem> albumBuilder)
     {
         _configuration = configuration;
-        _albumManagerCreator = albumManagerCreator;
+        _albumBuilder = albumBuilder;
     }
 
-    public IAlbumManagerUploaderBuilder AddEditor(Action<IEditorConfiguration> configuration)
+    public IUploaderBuilder<TItem> AddEditor(Action<IEditorConfiguration> configuration)
     {
         configuration(_configuration.EditorConfiguration);
-        return new AlbumManagerUploaderBuilder(_configuration, _albumManagerCreator);
+        return new UploaderBuilder<TItem>(_configuration, _albumBuilder);
     }
 }
