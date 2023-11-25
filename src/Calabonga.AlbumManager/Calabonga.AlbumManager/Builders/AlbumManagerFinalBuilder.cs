@@ -5,21 +5,22 @@ namespace Calabonga.AlbumsManager.Builders;
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerBuilderResult)
 /// </summary>
-internal sealed class AlbumManagerFinalBuilder : IFinalBuilder
+internal sealed class FinalBuilder<TItem> : IFinalBuilder<TItem>
+    where TItem : class
 {
     private readonly IConfiguration _configuration;
-    private readonly IAlbumManagerCreator _albumManagerCreator;
+    private readonly IAlbumBuilder<TItem> _albumBuilder;
 
-    public AlbumManagerFinalBuilder(IConfiguration configuration, IAlbumManagerCreator albumManagerCreator)
+    public FinalBuilder(IConfiguration configuration, IAlbumBuilder<TItem> albumBuilder)
     {
         _configuration = configuration;
-        _albumManagerCreator = albumManagerCreator;
+        _albumBuilder = albumBuilder;
     }
 
-    public AlbumManager Build()
+    public AlbumManager<TItem> Build()
     {
-        var items = _albumManagerCreator.GetItems();
-        var manager = new AlbumManager(items);
+        var items = _albumBuilder.GetItems();
+        var manager = new AlbumManager<TItem>(items);
         return manager;
     }
 }

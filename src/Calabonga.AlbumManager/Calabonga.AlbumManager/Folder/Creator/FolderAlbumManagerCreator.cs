@@ -1,5 +1,5 @@
 ﻿using Calabonga.AlbumsManager.Builders.Base;
-using Calabonga.AlbumsManager.Folder.Configurations;
+using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager.Folder.Creator;
@@ -7,9 +7,9 @@ namespace Calabonga.AlbumsManager.Folder.Creator;
 /// <summary>
 /// // Calabonga: update summary (2023-10-28 10:26 FolderAlbumCreator)
 /// </summary>
-public sealed class FolderAlbumManagerCreator : AlbumManagerCreatorBase<FolderAlbumCreatorConfiguration>
+public sealed class FolderAlbumBuilder : AlbumBuilderBase<CreatorConfiguration, AlbumItem>
 {
-    public FolderAlbumManagerCreator(FolderAlbumCreatorConfiguration configuration)
+    public FolderAlbumBuilder(CreatorConfiguration configuration)
         : base(configuration) { }
 
     /// <summary>

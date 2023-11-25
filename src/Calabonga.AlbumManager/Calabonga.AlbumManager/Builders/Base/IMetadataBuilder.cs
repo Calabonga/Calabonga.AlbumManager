@@ -3,11 +3,11 @@
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerMetadataBuilder) 
 /// </summary>
-public interface IAlbumManagerMetadataBuilder
+public interface IMetadataBuilder<TItem>
 {
     /// <summary>
     /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerMetadataBuilder)
     /// </summary>
     /// <param name="configuration"></param>
-    IAlbumManagerEditorBuilder AddMetadataReader(Action<IMetadataConfiguration> configuration);
+    IEditorBuilder<TItem> AddMetadataReader(Action<IMetadataConfiguration> configuration);
 }
