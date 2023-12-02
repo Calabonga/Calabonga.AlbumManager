@@ -77,6 +77,8 @@
 4. [Фотоальбом на C# (часть 4)](https://www.calabonga.net/blog/post/photoalbum-csharp-4)
 5. [Фотоальбом на C# (часть 5)](https://www.calabonga.net/blog/post/photoalbum-csharp-5)
 6. [Фотоальбом на C# (часть 6)](https://www.calabonga.net/blog/post/photoalbum-csharp-6)
+7. [Фотоальбом на C# (часть 7)](https://www.calabonga.net/blog/post/photoalbum-csharp-7)
+8. [Фотоальбом на C# (часть 8)](https://www.calabonga.net/blog/post/photoalbum-csharp-8)
 
 
 
