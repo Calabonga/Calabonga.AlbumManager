@@ -1,0 +1,17 @@
+﻿@page "/details/{FolderName}"
+@model DetailsModel
+@{
+    ViewData["Title"] = "Images from folder";
+}
+
+<h1>@ViewData["Title"] @Model.FolderName</h1>
+
+@if (Model.Images is not null && Model.Images.Any())
+{
+    foreach (var item in Model.Images)
+    {
+        <p>
+            <img src="~/images/@Model.FolderName/@item.FileName" width="500px"/>
+        </p>
+    }
+}

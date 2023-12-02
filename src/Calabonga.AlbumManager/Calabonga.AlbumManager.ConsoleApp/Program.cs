@@ -7,7 +7,7 @@ using Calabonga.AlbumsManager.Models;
 //var manager1 = new AlbumManagerBuilder().AddDefaultFolder("C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Gallery");
 
 var manager = new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfiguration, AlbumItem>()
-    .AddCreator(x => x.SourcePath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Animals")
+    .AddCreator<CreatorConfiguration>(x => x.SourcePath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Animals")
     .AddViewer(x => x.TakeTop = 10)
     .AddMetadataReader(x => x.Enabled = false)
     .AddEditor(x => x.Enabled = false)

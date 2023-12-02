@@ -12,11 +12,12 @@ public sealed class AlbumManagerBuilder<TCreator, TConfiguration, TItem>
 {
     private IAlbumBuilder<TItem> _albumBuilder = null!;
 
-    public IViewerBuilder<TItem> AddCreator(Action<ICreatorConfiguration> configuration)
+    public IViewerBuilder<TItem> AddCreator<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
+        where TCreatorConfiguration : ICreatorConfiguration
     {
         var config = new TConfiguration();
-        configuration(config.CreatorConfiguration);
-        _albumBuilder = (TCreator)Activator.CreateInstance(typeof(TCreator), config.CreatorConfiguration)!;
+        configuration((TCreatorConfiguration)config.CreatorConfiguration);
+        _albumBuilder = (TCreator)Activator.CreateInstance(typeof(TCreator), config)!;
 
         return new ViewerBuilder<TItem>(config, _albumBuilder);
     }

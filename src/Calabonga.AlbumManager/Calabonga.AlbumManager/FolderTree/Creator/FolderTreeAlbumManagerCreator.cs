@@ -7,21 +7,21 @@ namespace Calabonga.AlbumsManager.FolderTree.Creator;
 /// <summary>
 /// // Calabonga: update summary (2023-10-28 10:26 FolderAlbumCreator)
 /// </summary>
-public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<CreatorConfiguration, AlbumDirectory>
+public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, AlbumDirectory>
 {
-    public FolderTreeAlbumBuilder(CreatorConfiguration configuration)
+    public FolderTreeAlbumBuilder(DefaultConfiguration configuration)
         : base(configuration) { }
 
     public override List<AlbumDirectory> GetItems()
     {
         var result = new List<AlbumDirectory>();
-        if (!Path.Exists(Configuration.SourcePath))
+        if (!Path.Exists(Configuration.CreatorConfiguration.SourcePath))
         {
             // Calabonga: log info about no path found (2023-10-28 11:03 FolderAlbumCreator)
             return new List<AlbumDirectory>();
         }
 
-        var directoryInfo = new DirectoryInfo(Configuration.SourcePath);
+        var directoryInfo = new DirectoryInfo(Configuration.CreatorConfiguration.SourcePath);
 
         var directories = directoryInfo.GetDirectories();
 
@@ -61,7 +61,6 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<CreatorConfigurati
                 DirectoryName = directory.Name
             });
         }
-
 
         return result;
     }
