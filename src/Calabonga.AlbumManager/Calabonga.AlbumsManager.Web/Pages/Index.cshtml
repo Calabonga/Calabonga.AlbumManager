@@ -1,0 +1,21 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Directories with Images";
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.Directories is not null && Model.Directories.Any())
+{
+    foreach (var item in Model.Directories)
+    {
+        <p>
+            <a href="~/Details/@item.DirectoryName" class="text-decoration-none">
+                <span class="display-4 text-uppercase">@item.DirectoryName</span> 
+                <span class="badge bg-secondary">@(item.Items?.Count() ?? 0)</span>
+            </a>
+        </p>
+    }
+}

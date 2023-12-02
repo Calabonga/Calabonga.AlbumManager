@@ -7,9 +7,9 @@ namespace Calabonga.AlbumsManager.Folder.Creator;
 /// <summary>
 /// // Calabonga: update summary (2023-10-28 10:26 FolderAlbumCreator)
 /// </summary>
-public sealed class FolderAlbumBuilder : AlbumBuilderBase<CreatorConfiguration, AlbumItem>
+public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, AlbumItem>
 {
-    public FolderAlbumBuilder(CreatorConfiguration configuration)
+    public FolderAlbumBuilder(DefaultConfiguration configuration)
         : base(configuration) { }
 
     /// <summary>
@@ -18,13 +18,13 @@ public sealed class FolderAlbumBuilder : AlbumBuilderBase<CreatorConfiguration, 
     /// <returns></returns>
     public override List<AlbumItem> GetItems()
     {
-        if (!Path.Exists(Configuration.SourcePath))
+        if (!Path.Exists(Configuration.CreatorConfiguration.SourcePath))
         {
             // Calabonga: log info about no path found (2023-10-28 11:03 FolderAlbumCreator)
             return new List<AlbumItem>();
         }
 
-        var directory = new DirectoryInfo(Configuration.SourcePath);
+        var directory = new DirectoryInfo(Configuration.CreatorConfiguration.SourcePath);
 
         var files = directory.GetFiles();
 

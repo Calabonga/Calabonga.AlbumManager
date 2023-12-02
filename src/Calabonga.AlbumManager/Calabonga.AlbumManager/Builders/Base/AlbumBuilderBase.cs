@@ -4,6 +4,7 @@
 /// Default creator functionality for images
 /// </summary>
 public abstract class AlbumBuilderBase<TConfiguration, TItem> : IAlbumBuilder<TItem>
+    where TConfiguration : IConfiguration
     where TItem : class
 {
     protected AlbumBuilderBase(TConfiguration configuration)
