@@ -17,9 +17,9 @@ internal sealed class UploaderBuilder<TItem> : IUploaderBuilder<TItem>
         _albumBuilder = albumBuilder;
     }
 
-    public IFinalBuilder<TItem> AddUploader(Action<IUploaderConfiguration> configuration)
+    public IFinalBuilder<TItem> AddUploader<TUploaderConfiguration>(Action<TUploaderConfiguration> configuration)
     {
-        configuration(_configuration.UploaderConfiguration);
+        configuration((TUploaderConfiguration)_configuration.UploaderConfiguration);
         return new FinalBuilder<TItem>(_configuration, _albumBuilder);
     }
 }

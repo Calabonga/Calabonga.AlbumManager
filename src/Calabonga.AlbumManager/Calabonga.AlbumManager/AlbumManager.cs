@@ -7,7 +7,15 @@ namespace Calabonga.AlbumsManager;
 /// </summary>
 public sealed class AlbumManager<TItem>
 {
-    internal AlbumManager(IEnumerable<TItem> items) => Items = items.ToList();
+    internal AlbumManager(IEnumerable<TItem> items, IConfiguration configuration)
+    {
+        Configuration = configuration;
+        Items = items.ToList();
+    }
+    /// <summary>
+    /// Configuration used for files processing
+    /// </summary>
+    public IConfiguration Configuration { get; }
 
     /// <summary>
     /// Collected images

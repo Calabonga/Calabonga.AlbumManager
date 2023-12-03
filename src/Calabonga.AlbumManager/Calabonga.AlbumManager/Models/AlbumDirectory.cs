@@ -18,5 +18,5 @@ public class AlbumDirectory
     /// <summary>
     /// // Calabonga: update summary (2023-11-18 02:37 AlbumItem)
     /// </summary>
-    public IEnumerable<AlbumItem>? Items { get; set; }
+    public IEnumerable<AlbumImage>? Items { get; set; }
 }

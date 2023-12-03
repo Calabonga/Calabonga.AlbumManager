@@ -17,9 +17,9 @@ internal sealed class MetadataBuilder<TItem> : IMetadataBuilder<TItem>
         _albumBuilder = albumBuilder;
     }
 
-    public IEditorBuilder<TItem> AddMetadataReader(Action<IMetadataConfiguration> configuration)
+    public IEditorBuilder<TItem> AddMetadataReader<TMetadataConfiguration>(Action<TMetadataConfiguration> configuration)
     {
-        configuration(_configuration.MetadataConfiguration);
+        configuration((TMetadataConfiguration)_configuration.MetadataConfiguration);
         return new EditorBuilder<TItem>(_configuration, _albumBuilder);
     }
 

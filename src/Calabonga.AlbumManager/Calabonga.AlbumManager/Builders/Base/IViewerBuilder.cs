@@ -9,5 +9,5 @@ public interface IViewerBuilder<TItem>
     /// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerViewerBuilder) 
     /// </summary>
     /// <param name="configuration"></param>
-    IMetadataBuilder<TItem> AddViewer(Action<IViewerConfiguration> configuration);
+    IMetadataBuilder<TItem> AddViewer<TViewerConfiguration>(Action<TViewerConfiguration> configuration);
 }

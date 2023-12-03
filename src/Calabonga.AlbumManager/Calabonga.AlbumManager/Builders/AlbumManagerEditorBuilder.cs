@@ -17,9 +17,9 @@ internal sealed class EditorBuilder<TItem> : IEditorBuilder<TItem>
         _albumBuilder = albumBuilder;
     }
 
-    public IUploaderBuilder<TItem> AddEditor(Action<IEditorConfiguration> configuration)
+    public IUploaderBuilder<TItem> AddEditor<TEditorConfiguration>(Action<TEditorConfiguration> configuration)
     {
-        configuration(_configuration.EditorConfiguration);
+        configuration((TEditorConfiguration)_configuration.EditorConfiguration);
         return new UploaderBuilder<TItem>(_configuration, _albumBuilder);
     }
 }

@@ -9,5 +9,5 @@ public interface IUploaderBuilder<TItem>
     /// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerUploaderBuilder)
     /// </summary>
     /// <param name="configuration"></param>
-    IFinalBuilder<TItem> AddUploader(Action<IUploaderConfiguration> configuration);
+    IFinalBuilder<TItem> AddUploader<TUploaderConfiguration>(Action<TUploaderConfiguration> configuration);
 }

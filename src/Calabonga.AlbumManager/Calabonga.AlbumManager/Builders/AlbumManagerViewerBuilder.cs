@@ -17,9 +17,9 @@ internal sealed class ViewerBuilder<TItem> : IViewerBuilder<TItem>
         _albumBuilder = albumBuilder;
     }
 
-    public IMetadataBuilder<TItem> AddViewer(Action<IViewerConfiguration> configuration)
+    public IMetadataBuilder<TItem> AddViewer<TViewerConfiguration>(Action<TViewerConfiguration> configuration)
     {
-        configuration(_configuration.ViewerConfiguration);
+        configuration((TViewerConfiguration)_configuration.ViewerConfiguration);
         return new MetadataBuilder<TItem>(_configuration, _albumBuilder);
     }
 }

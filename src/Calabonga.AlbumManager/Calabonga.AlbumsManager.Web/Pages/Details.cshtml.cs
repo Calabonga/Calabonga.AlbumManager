@@ -31,5 +31,5 @@ public class DetailsModel : PageModel
         return Page();
     }
 
-    public IEnumerable<AlbumItem>? Images { get; set; }
+    public IEnumerable<AlbumImage>? Images { get; set; }
 }
