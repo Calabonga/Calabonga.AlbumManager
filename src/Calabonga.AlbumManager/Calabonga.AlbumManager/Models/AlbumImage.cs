@@ -1,6 +1,6 @@
 ﻿namespace Calabonga.AlbumsManager.Models;
 
-public class AlbumItem
+public class AlbumImage
 {
     /// <summary>
     /// // Calabonga: update summary (2023-11-18 02:36 AlbumItem)

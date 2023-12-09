@@ -5,7 +5,7 @@ namespace Calabonga.AlbumsManager.Configurations;
 /// <summary>
 /// Global interface configuration for Folder Album
 /// </summary>
-public class DefaultConfiguration : Configuration
+public class DefaultConfiguration : ConfigurationBase
 {
 
 }

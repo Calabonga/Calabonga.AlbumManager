@@ -9,5 +9,5 @@ public interface IEditorBuilder<TItem>
     /// // Calabonga: update summary (2023-11-18 02:19 IAlbumManagerEditorBuilder)
     /// </summary>
     /// <param name="configuration"></param>
-    IUploaderBuilder<TItem> AddEditor(Action<IEditorConfiguration> configuration);
+    IUploaderBuilder<TItem> AddEditor<TEditorConfiguration>(Action<TEditorConfiguration> configuration);
 }

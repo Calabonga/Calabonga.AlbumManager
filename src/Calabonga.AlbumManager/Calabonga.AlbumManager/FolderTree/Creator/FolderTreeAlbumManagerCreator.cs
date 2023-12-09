@@ -18,7 +18,7 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
         if (!Path.Exists(Configuration.CreatorConfiguration.SourcePath))
         {
             // Calabonga: log info about no path found (2023-10-28 11:03 FolderAlbumCreator)
-            return new List<AlbumDirectory>();
+            return result;
         }
 
         var directoryInfo = new DirectoryInfo(Configuration.CreatorConfiguration.SourcePath);
@@ -46,7 +46,7 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
                 continue;
             }
 
-            var files = fileInfos.Select(x => new AlbumItem
+            var files = fileInfos.Select(x => new AlbumImage
             {
                 FileName = x.Name,
                 // Calabonga: Description update (2023-10-28 11:03 FolderAlbumCreator)

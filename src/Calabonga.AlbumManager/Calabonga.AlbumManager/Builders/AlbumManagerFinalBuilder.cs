@@ -20,7 +20,7 @@ internal sealed class FinalBuilder<TItem> : IFinalBuilder<TItem>
     public AlbumManager<TItem> Build()
     {
         var items = _albumBuilder.GetItems();
-        var manager = new AlbumManager<TItem>(items);
+        var manager = new AlbumManager<TItem>(items, _configuration);
         return manager;
     }
 }

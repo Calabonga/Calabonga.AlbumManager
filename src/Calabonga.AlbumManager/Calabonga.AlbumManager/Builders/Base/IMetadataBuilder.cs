@@ -9,5 +9,5 @@ public interface IMetadataBuilder<TItem>
     /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerMetadataBuilder)
     /// </summary>
     /// <param name="configuration"></param>
-    IEditorBuilder<TItem> AddMetadataReader(Action<IMetadataConfiguration> configuration);
+    IEditorBuilder<TItem> AddMetadataReader<TMetadataConfiguration>(Action<TMetadataConfiguration> configuration);
 }
