@@ -1,4 +1,4 @@
-﻿namespace Calabonga.AlbumsManager.Builders.Base;
+﻿namespace Calabonga.AlbumsManager.Base.Configurations;
 
 /// <summary>
 /// Configuration for Creator processing
@@ -9,4 +9,9 @@ public interface ICreatorConfiguration
     /// Source where images live
     /// </summary>
     string SourcePath { get; set; }
+
+    /// <summary>
+    /// Should the manager search images
+    /// </summary>
+    bool SkipFoundImages { get; set; }
 }

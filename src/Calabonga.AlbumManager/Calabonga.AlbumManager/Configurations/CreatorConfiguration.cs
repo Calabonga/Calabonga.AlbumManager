@@ -1,4 +1,4 @@
-﻿using Calabonga.AlbumsManager.Builders.Base;
+﻿using Calabonga.AlbumsManager.Base.Configurations;
 
 namespace Calabonga.AlbumsManager.Configurations;
 
@@ -11,4 +11,6 @@ public class CreatorConfiguration : ICreatorConfiguration
     /// Source where images live
     /// </summary>
     public string SourcePath { get; set; } = null!;
+
+    public bool SkipFoundImages { get; set; }
 }

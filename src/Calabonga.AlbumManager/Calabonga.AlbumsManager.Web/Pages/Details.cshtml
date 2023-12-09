@@ -11,7 +11,8 @@
     foreach (var item in Model.Images)
     {
         <p>
-            <img src="~/images/@Model.FolderName/@item.FileName" width="500px"/>
+            <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.OriginalBytes!)" />
+            <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.ProcessedBytes!)" />
         </p>
     }
 }

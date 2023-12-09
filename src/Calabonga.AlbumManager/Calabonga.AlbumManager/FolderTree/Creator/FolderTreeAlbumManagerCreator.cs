@@ -1,4 +1,4 @@
-﻿using Calabonga.AlbumsManager.Builders.Base;
+﻿using Calabonga.AlbumsManager.Base.Builder;
 using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Models;
 
@@ -41,14 +41,14 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
                 result.Add(new AlbumDirectory
                 {
                     Description = "Files not found in directory",
-                    DirectoryName = directory.Name
+                    Name = directory.Name
                 });
                 continue;
             }
 
             var files = fileInfos.Select(x => new AlbumImage
             {
-                FileName = x.Name,
+                Name = x.Name,
                 // Calabonga: Description update (2023-10-28 11:03 FolderAlbumCreator)
                 Description = $"file {nameof(x.CreationTime)}: {x.CreationTime}",
                 FileSize = x.Length
@@ -58,7 +58,7 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
             {
                 Items = files,
                 Description = $"Total files in directory: {files.Count}",
-                DirectoryName = directory.Name
+                Name = directory.Name
             });
         }
 

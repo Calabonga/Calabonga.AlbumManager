@@ -1,6 +1,6 @@
 ﻿using Calabonga.AlbumsManager.Configurations;
 
-namespace Calabonga.AlbumsManager.Builders.Base;
+namespace Calabonga.AlbumsManager.Base.Configurations;
 /// <summary>
 /// // Calabonga: update summary (2023-12-03 08:03 Configuration)
 /// </summary>

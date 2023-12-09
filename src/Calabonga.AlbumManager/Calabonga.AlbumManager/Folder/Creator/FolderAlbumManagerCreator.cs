@@ -1,4 +1,4 @@
-﻿using Calabonga.AlbumsManager.Builders.Base;
+﻿using Calabonga.AlbumsManager.Base.Builder;
 using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Models;
 
@@ -36,10 +36,11 @@ public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, 
 
         return files.Select(x => new AlbumImage
         {
-            FileName = x.Name,
+            Name = x.Name,
             // Calabonga: Description update (2023-10-28 11:03 FolderAlbumCreator)
             Description = x.DirectoryName,
-            FileSize = x.Length
+            FileSize = x.Length,
+            OriginalBytes = File.ReadAllBytes(Path.Combine(directory.FullName, x.Name))
         }).ToList();
     }
 }

@@ -1,4 +1,4 @@
-﻿using Calabonga.AlbumsManager.Builders.Base;
+﻿using Calabonga.AlbumsManager.Base.Configurations;
 
 namespace Calabonga.AlbumsManager.Configurations;
 
