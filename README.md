@@ -69,7 +69,7 @@
 
 `AlbumUploader` - загрузка изображений. Загрузчик позволяет загрузить изображения и "разложить" их в соответствии с настройками `AlbumManager`, например, с размещением в соответствующие папки.
 
-# Видео о создании сборки
+# Видео о создании nuget-пакета
 
 1. [Фотоальбом на C# (часть 1)](https://www.calabonga.net/blog/post/photoalbum-csharp-1)
 2. [Фотоальбом на C# (часть 2)](https://www.calabonga.net/blog/post/photoalbum-csharp-2)
@@ -80,6 +80,7 @@
 7. [Фотоальбом на C# (часть 7)](https://www.calabonga.net/blog/post/photoalbum-csharp-7)
 8. [Фотоальбом на C# (часть 8)](https://www.calabonga.net/blog/post/photoalbum-csharp-8)
 9. [Фотоальбом на C# (часть 9)](https://www.calabonga.net/blog/post/photoalbum-csharp-9)
+10. [Фотоальбом на C# (часть 10)](https://www.calabonga.net/blog/post/photoalbum-csharp-10)
 
 
 
