@@ -1,5 +1,5 @@
-﻿using Calabonga.AlbumsManager.Base.Configurations;
-using Calabonga.AlbumsManager.ImageProcessors;
+﻿using Calabonga.AlbumsManager.Base;
+using Calabonga.AlbumsManager.Base.Configurations;
 
 namespace Calabonga.AlbumsManager.Configurations;
 

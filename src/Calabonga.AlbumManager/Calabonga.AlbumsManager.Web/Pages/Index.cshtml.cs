@@ -18,13 +18,13 @@ public class IndexModel : PageModel
 
     public AlbumManager<AlbumDirectory> Manager { get; protected set; }
 
-    public void OnGet()
+    public async Task OnGet()
     {
         var folder = Path.Combine(_environment.WebRootPath, "Images");
         _logger.LogInformation(folder);
-        Manager = AlbumManagerBuilder.GetDirectoriesFromFolderTree(folder);
+        Manager = await AlbumManagerBuilder.GetDirectoriesFromFolderTreeAsync(folder);
 
-        Directories = Manager.GetView();
+        Directories = Manager.Items;
     }
 
     public IEnumerable<AlbumDirectory>? Directories { get; set; }

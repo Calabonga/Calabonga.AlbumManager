@@ -1,6 +1,6 @@
 ﻿using Calabonga.AlbumsManager.Models;
 
-namespace Calabonga.AlbumsManager.ImageProcessors;
+namespace Calabonga.AlbumsManager.Base;
 
 /// <summary>
 /// // Calabonga: update summary (2023-12-09 08:40 DefaultImageView)
@@ -10,7 +10,6 @@ public interface IImageProcessor
     /// <summary>
     /// Execute processing for item
     /// </summary>
-
     /// <param name="imageInfo"></param>
-    void Process(AlbumImage imageInfo);
+    Task ProcessAsync(AlbumImage imageInfo);
 }

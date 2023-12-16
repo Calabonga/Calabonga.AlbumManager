@@ -16,31 +16,34 @@ public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, 
     /// Returns a collection for <see cref="AlbumImage"/> found in location provided
     /// </summary>
     /// <returns></returns>
-    public override List<AlbumImage> GetItems()
+    protected override Task<List<AlbumImage>> ExecuteCreateAsync(CancellationToken cancellationToken)
     {
         if (!Path.Exists(Configuration.CreatorConfiguration.SourcePath))
         {
             // Calabonga: log info about no path found (2023-10-28 11:03 FolderAlbumCreator)
-            return new List<AlbumImage>();
+            return Task.FromResult(new List<AlbumImage>());
         }
 
         var directory = new DirectoryInfo(Configuration.CreatorConfiguration.SourcePath);
+        var types = string.IsNullOrEmpty(Configuration.CreatorConfiguration.SearchFilePattern)
+            ? new[] { "*.png;", "*.jpg" }
+            : Configuration.CreatorConfiguration.SearchFilePattern.Split(';');
 
-        var files = directory.GetFiles();
+        var files = types.SelectMany(x => directory.GetFiles(x)).ToList();
 
         if (!files.Any())
         {
             // Calabonga: log info about no items found (2023-10-28 11:03 FolderAlbumCreator)
-            return new List<AlbumImage>();
+            return Task.FromResult(new List<AlbumImage>());
         }
 
-        return files.Select(x => new AlbumImage
+        return Task.FromResult(files.Select(x => new AlbumImage
         {
+            Path = directory.FullName,
             Name = x.Name,
-            // Calabonga: Description update (2023-10-28 11:03 FolderAlbumCreator)
-            Description = x.DirectoryName,
+            Description = "N/A",
             FileSize = x.Length,
             OriginalBytes = File.ReadAllBytes(Path.Combine(directory.FullName, x.Name))
-        }).ToList();
+        }).ToList());
     }
 }

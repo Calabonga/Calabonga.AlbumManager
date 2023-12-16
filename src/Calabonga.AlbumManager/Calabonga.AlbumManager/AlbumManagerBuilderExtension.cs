@@ -3,6 +3,7 @@ using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Folder.Creator;
 using Calabonga.AlbumsManager.FolderTree.Creator;
 using Calabonga.AlbumsManager.ImageProcessors;
+using Calabonga.AlbumsManager.MetadataProcessors;
 using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager;
@@ -12,28 +13,31 @@ namespace Calabonga.AlbumsManager;
 /// </summary>
 public static class AlbumManagerBuilder
 {
-    public static AlbumManager<AlbumImage> GetImagesFromFolder(string folder)
-        => new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfiguration, AlbumImage>()
+    public static async Task<AlbumManager<AlbumImage>> GetImagesFromFolderAsync(string folder)
+        => await new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfiguration, AlbumImage>()
             .AddCreator<CreatorConfiguration>(x => x.SourcePath = folder)
             .AddViewer<ViewerConfiguration>(x =>
             {
-                x.AddImageProcessor(new WatermarkImageProcessor());
+                x.AddImageProcessor(new TextWatermarkImageProcessor());
             })
-            .AddMetadataReader<MetadataConfiguration>(x => x.Enabled = false)
-            .AddEditor<EditorConfiguration>(x => x.Enabled = false)
-            .AddUploader<UploaderConfiguration>(x => x.Enabled = false)
-            .Build();
+            .AddMetadataReader<MetadataConfiguration>(x =>
+            {
+                x.SetMetadataProcessor(new TextMetadataProcessor());
+            })
+            .AddEditor<EditorConfiguration>(_ => { })
+            .AddUploader<UploaderConfiguration>(_ => { })
+            .BuildAsync(CancellationToken.None);
 
-    public static AlbumManager<AlbumDirectory> GetDirectoriesFromFolderTree(string folderTree)
-        => new AlbumManagerBuilder<FolderTreeAlbumBuilder, DefaultConfiguration, AlbumDirectory>()
+    public static async Task<AlbumManager<AlbumDirectory>> GetDirectoriesFromFolderTreeAsync(string folderTree)
+        => await new AlbumManagerBuilder<FolderTreeAlbumBuilder, DefaultConfiguration, AlbumDirectory>()
             .AddCreator<CreatorConfiguration>(x =>
             {
                 x.SourcePath = folderTree;
                 x.SkipFoundImages = true;
             })
             .AddViewer<ViewerConfiguration>(x => { })
-            .AddMetadataReader<MetadataConfiguration>(x => x.Enabled = false)
-            .AddEditor<EditorConfiguration>(x => x.Enabled = false)
-            .AddUploader<UploaderConfiguration>(x => x.Enabled = false)
-            .Build();
+            .AddMetadataReader<MetadataConfiguration>(_ => { })
+            .AddEditor<EditorConfiguration>(_ => { })
+            .AddUploader<UploaderConfiguration>(_ => { })
+            .BuildAsync(CancellationToken.None);
 }

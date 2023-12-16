@@ -12,7 +12,7 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
     public FolderTreeAlbumBuilder(DefaultConfiguration configuration)
         : base(configuration) { }
 
-    public override List<AlbumDirectory> GetItems()
+    public override async Task<List<AlbumDirectory>> GetItemsAsync(CancellationToken cancellationToken)
     {
         var result = new List<AlbumDirectory>();
         if (!Path.Exists(Configuration.CreatorConfiguration.SourcePath))
@@ -64,4 +64,6 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
 
         return result;
     }
+
+
 }

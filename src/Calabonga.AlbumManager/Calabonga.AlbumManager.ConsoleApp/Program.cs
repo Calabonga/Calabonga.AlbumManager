@@ -6,25 +6,25 @@ using Calabonga.AlbumsManager.Models;
 //builder.AddCreator<FolderTreeAlbumCreator, FolderTreeAlbumCreatorConfiguration>(x => x.SourceRootPath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Gallery");
 //var manager1 = new AlbumManagerBuilder().AddDefaultFolder("C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Gallery");
 
-var manager = new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfiguration, AlbumImage>()
+var manager = await new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfiguration, AlbumImage>()
     .AddCreator<CreatorConfiguration>(x => x.SourcePath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Animals")
     .AddViewer<ViewerConfiguration>(_ => { })
-    .AddMetadataReader<MetadataConfiguration>(x => x.Enabled = false)
-    .AddEditor<EditorConfiguration>(x => x.Enabled = false)
-    .AddUploader<UploaderConfiguration>(x => x.Enabled = false)
-    .Build();
+    .AddMetadataReader<MetadataConfiguration>(_ => { })
+    .AddEditor<EditorConfiguration>(_ => { })
+    .AddUploader<UploaderConfiguration>(_ => { })
+    .BuildAsync(CancellationToken.None);
 
 //var manager = new AlbumManagerBuilder<FolderTreeAlbumBuilder, DefaultConfiguration, AlbumDirectory>()
 //    .AddCreator(x => x.SourcePath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Gallery")
 //    .AddViewer(x => x.TakeTop = 10)
-//    .AddMetadataReader(x => x.Enabled = false)
-//    .AddEditor(x => x.Enabled = false)
-//    .AddUploader(x => x.Enabled = false)
-//    .Build();
+//    .AddMetadataReader(_ => {})
+//    .AddEditor(_ => {})
+//    .AddUploader(_ => {})
+//    .BuildAsync();
 
 Console.WriteLine(manager.ToString());
 
-var view = manager.GetView();
+var view = manager.Items;
 
 //foreach (var item in view.Items)
 //{
