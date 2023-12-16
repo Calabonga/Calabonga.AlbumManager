@@ -7,5 +7,5 @@ namespace Calabonga.AlbumsManager.Base.Builder;
 /// </summary>
 public interface IFinalBuilder<TItem> where TItem : ItemBase
 {
-    AlbumManager<TItem> Build();
+    Task<AlbumManager<TItem>> BuildAsync(CancellationToken cancellationToken);
 }

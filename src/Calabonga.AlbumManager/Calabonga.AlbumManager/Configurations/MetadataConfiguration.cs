@@ -1,4 +1,5 @@
-﻿using Calabonga.AlbumsManager.Base.Configurations;
+﻿using Calabonga.AlbumsManager.Base;
+using Calabonga.AlbumsManager.Base.Configurations;
 
 namespace Calabonga.AlbumsManager.Configurations;
 
@@ -7,8 +8,8 @@ namespace Calabonga.AlbumsManager.Configurations;
 /// </summary>
 public class MetadataConfiguration : IMetadataConfiguration
 {
-    /// <summary>
-    /// Indicates that processing in Metadata is enabled 
-    /// </summary>
-    public bool Enabled { get; set; }
+    public IMetadataProcessor? MetadataProcessor { get; private set; }
+
+    public void SetMetadataProcessor(IMetadataProcessor metadataProcessor)
+        => MetadataProcessor = metadataProcessor;
 }

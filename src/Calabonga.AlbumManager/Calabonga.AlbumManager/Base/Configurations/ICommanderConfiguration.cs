@@ -1,9 +1,9 @@
 ﻿namespace Calabonga.AlbumsManager.Base.Configurations;
 
 /// <summary>
-/// Configuration for Uploader processing
+/// Configuration for Editor processing
 /// </summary>
-public interface IUploaderConfiguration
+public interface ICommanderConfiguration
 {
 
 }

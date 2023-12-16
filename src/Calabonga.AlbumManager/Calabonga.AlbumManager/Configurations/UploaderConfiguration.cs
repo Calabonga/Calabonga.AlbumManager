@@ -7,8 +7,5 @@ namespace Calabonga.AlbumsManager.Configurations;
 /// </summary>
 public class UploaderConfiguration : IUploaderConfiguration
 {
-    /// <summary>
-    /// Indicates that processing in Uploader is enabled 
-    /// </summary>
-    public bool Enabled { get; set; }
+
 }

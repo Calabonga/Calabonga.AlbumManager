@@ -10,4 +10,6 @@ public class AlbumImage : ItemBase
     public byte[]? OriginalBytes { get; set; }
 
     public byte[]? ProcessedBytes { get; set; }
+
+    public string? Title { get; set; }
 }

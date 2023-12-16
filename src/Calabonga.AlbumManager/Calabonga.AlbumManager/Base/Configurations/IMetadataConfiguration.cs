@@ -5,8 +5,7 @@
 /// </summary>
 public interface IMetadataConfiguration
 {
-    /// <summary>
-    /// Indicates that processing in Metadata is enabled 
-    /// </summary>
-    bool Enabled { get; set; }
+    IMetadataProcessor? MetadataProcessor { get; }
+
+    public void SetMetadataProcessor(IMetadataProcessor metadataProcessor);
 }

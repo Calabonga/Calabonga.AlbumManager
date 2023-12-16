@@ -11,5 +11,5 @@ public interface IMetadataBuilder<TItem> where TItem : ItemBase
     /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerMetadataBuilder)
     /// </summary>
     /// <param name="configuration"></param>
-    IEditorBuilder<TItem> AddMetadataReader<TMetadataConfiguration>(Action<TMetadataConfiguration> configuration);
+    ICommanderBuilder<TItem> AddMetadataReader<TMetadataConfiguration>(Action<TMetadataConfiguration> configuration);
 }

@@ -5,10 +5,7 @@ namespace Calabonga.AlbumsManager.Configurations;
 /// <summary>
 /// Configuration for Editor processing in Folder mode
 /// </summary>
-public class EditorConfiguration : IEditorConfiguration
+public class CommanderConfiguration : ICommanderConfiguration
 {
-    /// <summary>
-    /// Indicates that processing in Editor is enabled 
-    /// </summary>
-    public bool Enabled { get; set; }
+
 }
