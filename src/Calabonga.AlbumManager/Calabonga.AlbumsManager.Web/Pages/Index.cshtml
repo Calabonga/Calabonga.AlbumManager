@@ -1,9 +1,9 @@
 ﻿@page
-@using Calabonga.AlbumsManager.Web.Application
+
 @model IndexModel
 @{
     ViewData["Title"] = "Directories with Images";
-    var isSkipped = ((CustomCreatorConfiguration)Model.Manager.Configuration.CreatorConfiguration).SkipFoundImages;
+    var isSkipped = Model.Manager.Configuration.CreatorConfiguration.SkipFoundImages;
 }
 
 
@@ -14,8 +14,8 @@
     foreach (var item in Model.Directories)
     {
         <p>
-            <a href="~/Details/@item.DirectoryName" class="text-decoration-none">
-                <span class="display-4 text-uppercase">@item.DirectoryName</span>
+            <a href="~/Details/@item.Name" class="text-decoration-none">
+                <span class="display-4 text-uppercase">@item.Name</span>
                 @if (!isSkipped)
                 {
                     <span class="badge bg-secondary">@(item.Items?.Count() ?? 0)</span>

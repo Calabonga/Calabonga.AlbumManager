@@ -8,7 +8,7 @@ using Calabonga.AlbumsManager.Models;
 
 var manager = new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfiguration, AlbumImage>()
     .AddCreator<CreatorConfiguration>(x => x.SourcePath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Animals")
-    .AddViewer<ViewerConfiguration>(x => x.TakeTop = 10)
+    .AddViewer<ViewerConfiguration>(_ => { })
     .AddMetadataReader<MetadataConfiguration>(x => x.Enabled = false)
     .AddEditor<EditorConfiguration>(x => x.Enabled = false)
     .AddUploader<UploaderConfiguration>(x => x.Enabled = false)
@@ -26,10 +26,10 @@ Console.WriteLine(manager.ToString());
 
 var view = manager.GetView();
 
-foreach (var item in view.Items)
-{
-    Console.WriteLine($"{item.FileName}- {((double)item.FileSize / 1024):F2} Kb");
-}
+//foreach (var item in view.Items)
+//{
+//    Console.WriteLine($"{item.FileName}- {((double)item.FileSize / 1024):F2} Kb");
+//}
 
 //foreach (var item in view.Items)
 //{

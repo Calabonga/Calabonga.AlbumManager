@@ -1,4 +1,4 @@
-﻿namespace Calabonga.AlbumsManager.Builders.Base;
+﻿namespace Calabonga.AlbumsManager.Base.Configurations;
 
 /// <summary>
 /// Configuration for Metadata processing

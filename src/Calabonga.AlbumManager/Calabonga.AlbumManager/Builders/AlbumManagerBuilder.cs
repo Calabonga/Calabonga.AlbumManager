@@ -1,4 +1,6 @@
-﻿using Calabonga.AlbumsManager.Builders.Base;
+﻿using Calabonga.AlbumsManager.Base.Builder;
+using Calabonga.AlbumsManager.Base.Configurations;
+using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager.Builders;
 
@@ -8,7 +10,7 @@ namespace Calabonga.AlbumsManager.Builders;
 public sealed class AlbumManagerBuilder<TCreator, TConfiguration, TItem>
     where TCreator : IAlbumBuilder<TItem>
     where TConfiguration : IConfiguration, new()
-    where TItem : class
+    where TItem : ItemBase
 {
     private IAlbumBuilder<TItem> _albumBuilder = null!;
 

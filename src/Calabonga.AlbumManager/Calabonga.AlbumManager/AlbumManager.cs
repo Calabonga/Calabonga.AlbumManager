@@ -1,4 +1,6 @@
-﻿using Calabonga.AlbumsManager.Builders.Base;
+﻿using Calabonga.AlbumsManager.Base.Configurations;
+using Calabonga.AlbumsManager.Base.Viewer;
+using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager;
 
@@ -6,21 +8,23 @@ namespace Calabonga.AlbumsManager;
 /// Photo and images Manager with some helpful processing
 /// </summary>
 public sealed class AlbumManager<TItem>
+    where TItem : ItemBase
 {
+    private readonly DefaultImageView<TItem> _view;
+
     internal AlbumManager(IEnumerable<TItem> items, IConfiguration configuration)
     {
         Configuration = configuration;
-        Items = items.ToList();
+        _view = new DefaultImageView<TItem>(items);
+
     }
     /// <summary>
     /// Configuration used for files processing
     /// </summary>
     public IConfiguration Configuration { get; }
 
-    /// <summary>
-    /// Collected images
-    /// </summary>
-    private List<TItem> Items { get; }
-
-    public IImageView<TItem> GetView() => new DefaultImageView<TItem>(Items);
+    public IEnumerable<TItem> GetView()
+        => _view
+            .Process(Configuration.ViewerConfiguration)
+            .Items;
 }

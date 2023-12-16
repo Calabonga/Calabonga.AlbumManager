@@ -1,4 +1,6 @@
-﻿using Calabonga.AlbumsManager.Builders.Base;
+﻿using Calabonga.AlbumsManager.Base.Builder;
+using Calabonga.AlbumsManager.Base.Configurations;
+using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager.Builders;
 
@@ -6,7 +8,7 @@ namespace Calabonga.AlbumsManager.Builders;
 /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerEditorBuilder)
 /// </summary>
 internal sealed class EditorBuilder<TItem> : IEditorBuilder<TItem>
-    where TItem : class
+    where TItem : ItemBase
 {
     private readonly IConfiguration _configuration;
     private readonly IAlbumBuilder<TItem> _albumBuilder;

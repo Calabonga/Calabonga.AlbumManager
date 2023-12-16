@@ -1,4 +1,4 @@
-﻿namespace Calabonga.AlbumsManager.Builders.Base;
+﻿namespace Calabonga.AlbumsManager.Base.Builder;
 
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:19 ICreator)

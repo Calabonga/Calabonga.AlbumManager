@@ -1,4 +1,5 @@
-﻿using Calabonga.AlbumsManager.Builders.Base;
+﻿using Calabonga.AlbumsManager.Base.Configurations;
+using Calabonga.AlbumsManager.ImageProcessors;
 
 namespace Calabonga.AlbumsManager.Configurations;
 
@@ -7,8 +8,9 @@ namespace Calabonga.AlbumsManager.Configurations;
 /// </summary>
 public class ViewerConfiguration : IViewerConfiguration
 {
-    /// <summary>
-    /// How many items should be taken when view created
-    /// </summary>
-    public int TakeTop { get; set; }
+    private readonly List<IImageProcessor> _processors = new();
+
+    public IEnumerable<IImageProcessor> ImageProcessors => _processors;
+
+    public void AddImageProcessor(IImageProcessor processor) => _processors.Add(processor);
 }

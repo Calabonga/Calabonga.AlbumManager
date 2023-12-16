@@ -8,10 +8,7 @@ public class DetailsModel : PageModel
 {
     private readonly IWebHostEnvironment _environment;
 
-    public DetailsModel(IWebHostEnvironment environment)
-    {
-        _environment = environment;
-    }
+    public DetailsModel(IWebHostEnvironment environment) => _environment = environment;
 
     [BindProperty(SupportsGet = true)]
     public string? FolderName { get; set; }
@@ -24,9 +21,7 @@ public class DetailsModel : PageModel
         }
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
         var manager = AlbumManagerBuilder.GetImagesFromFolder(folder);
-        var viewer = manager.GetView();
-
-        Images = viewer.Items;
+        Images = manager.GetView();
 
         return Page();
     }

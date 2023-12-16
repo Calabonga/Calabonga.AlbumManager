@@ -1,9 +1,11 @@
-﻿namespace Calabonga.AlbumsManager.Builders.Base;
+﻿using Calabonga.AlbumsManager.Models;
+
+namespace Calabonga.AlbumsManager.Base.Builder;
 
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:16 AlbumManagerUploaderBuilder)
 /// </summary>
-public interface IUploaderBuilder<TItem>
+public interface IUploaderBuilder<TItem> where TItem : ItemBase
 {
     /// <summary>
     /// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerUploaderBuilder)
