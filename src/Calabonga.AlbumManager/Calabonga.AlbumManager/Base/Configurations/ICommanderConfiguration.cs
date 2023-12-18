@@ -5,5 +5,7 @@
 /// </summary>
 public interface ICommanderConfiguration
 {
+    ICommandProcessor? CommandProcessor { get; }
 
+    public void SetCommandProcessor(ICommandProcessor commandProcessor);
 }

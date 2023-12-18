@@ -1,11 +1,18 @@
 ﻿@page "/details/{FolderName}"
-@using System.Reflection
+@using Calabonga.AlbumsManager.CommandProcessors.Commands
 @model DetailsModel
 @{
     ViewData["Title"] = "Images from folder";
 }
 
 <h1>@ViewData["Title"] @Model.FolderName</h1>
+
+@if (Model.SelectedImage is not null)
+{
+    <div class="border">
+        <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.SelectedImage.OriginalBytes!)" />
+    </div>
+}
 
 @if (Model.Images is not null && Model.Images.Any())
 {
@@ -20,9 +27,11 @@
             <h1>@item.Title</h1>
         }
         <p>
-            <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.OriginalBytes!)" />
             <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.ProcessedBytes!)" />
-            <small>@item.Description</small>
+            <small>@item.Description</small><br />
+            <a asp-page-handler="ImageById"
+               asp-route-fileName="@item.Name"
+               class="btn btn-secondary">@(nameof(GetImageByIdCommand))</a>
         </p>
     }
 }
