@@ -22,7 +22,8 @@ public interface ICommandProcessor
     /// <param name="command"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>Result of executing</returns>
-    Task<TResult> Execute<TResult, TCommand>(TCommand command, CancellationToken cancellationToken);
+    Task<TResult> Execute<TResult, TCommand>(TCommand command, CancellationToken cancellationToken)
+        where TCommand : ICommand<TResult>;
 
     /// <summary>
     /// Register a command for the current <see cref="AlbumManager{TItem}"/>.
