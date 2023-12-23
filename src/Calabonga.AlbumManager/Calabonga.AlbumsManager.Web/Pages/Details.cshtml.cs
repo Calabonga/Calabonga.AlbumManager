@@ -13,15 +13,15 @@ public class DetailsModel : PageModel
     [BindProperty(SupportsGet = true)]
     public string? FolderName { get; set; }
 
-    public IActionResult OnGet()
+    public async Task<IActionResult> OnGet()
     {
         if (string.IsNullOrWhiteSpace(FolderName))
         {
             return RedirectToPage("Error");
         }
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
-        var manager = AlbumManagerBuilder.GetImagesFromFolder(folder);
-        Images = manager.GetView();
+        var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(folder);
+        Images = manager.Items;
 
         return Page();
     }

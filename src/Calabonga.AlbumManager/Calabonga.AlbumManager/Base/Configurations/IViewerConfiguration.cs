@@ -1,6 +1,4 @@
-﻿using Calabonga.AlbumsManager.ImageProcessors;
-
-namespace Calabonga.AlbumsManager.Base.Configurations;
+﻿namespace Calabonga.AlbumsManager.Base.Configurations;
 
 /// <summary>
 /// Configuration for Viewer processing

@@ -7,8 +7,5 @@ namespace Calabonga.AlbumsManager.Configurations;
 /// </summary>
 public class EditorConfiguration : IEditorConfiguration
 {
-    /// <summary>
-    /// Indicates that processing in Editor is enabled 
-    /// </summary>
-    public bool Enabled { get; set; }
+
 }

@@ -1,4 +1,5 @@
-﻿using Calabonga.AlbumsManager.Models;
+﻿using Calabonga.AlbumsManager.Base;
+using Calabonga.AlbumsManager.Models;
 using SkiaSharp;
 
 namespace Calabonga.AlbumsManager.ImageProcessors;
@@ -6,15 +7,15 @@ namespace Calabonga.AlbumsManager.ImageProcessors;
 /// <summary>
 /// // Calabonga: update summary (2023-12-09 08:42 DefaultImageView)
 /// </summary>
-public class WatermarkImageProcessor : IImageProcessor
+public class TextWatermarkImageProcessor : IImageProcessor
 {
     private const string WatermarkText = "ALBUM-MANAGER";
 
-    public void Process(AlbumImage imageInfo)
+    public Task ProcessAsync(AlbumImage imageInfo)
     {
         if (imageInfo.OriginalBytes is null)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         var skBitmap1 = SKBitmap.Decode(imageInfo.OriginalBytes);
@@ -47,5 +48,7 @@ public class WatermarkImageProcessor : IImageProcessor
         skBitmap2.Dispose();
         skCanvas.Dispose();
         skSurface.Dispose();
+
+        return Task.CompletedTask;
     }
 }

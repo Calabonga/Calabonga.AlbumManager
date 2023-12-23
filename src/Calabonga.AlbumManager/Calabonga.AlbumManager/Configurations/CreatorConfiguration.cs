@@ -7,6 +7,8 @@ namespace Calabonga.AlbumsManager.Configurations;
 /// </summary>
 public class CreatorConfiguration : ICreatorConfiguration
 {
+    public string SearchFilePattern => "*.png;*.jpg";
+
     /// <summary>
     /// Source where images live
     /// </summary>

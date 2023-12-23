@@ -11,6 +11,11 @@ public abstract class ItemBase
     public string Name { get; set; } = null!;
 
     /// <summary>
+    /// // Calabonga: Summary required (ItemBase 2023-12-16 03:26)
+    /// </summary>
+    public string Path { get; set; } = null!;
+
+    /// <summary>
     /// // Calabonga: update summary (2023-11-18 02:36 AlbumItem)
     /// </summary>
     public string? Description { get; set; }

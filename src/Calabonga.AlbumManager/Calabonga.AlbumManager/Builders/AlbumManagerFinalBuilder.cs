@@ -3,7 +3,6 @@ using Calabonga.AlbumsManager.Base.Configurations;
 using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager.Builders;
-
 /// <summary>
 /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerBuilderResult)
 /// </summary>
@@ -19,9 +18,9 @@ internal sealed class FinalBuilder<TItem> : IFinalBuilder<TItem>
         _albumBuilder = albumBuilder;
     }
 
-    public AlbumManager<TItem> Build()
+    public async Task<AlbumManager<TItem>> BuildAsync(CancellationToken cancellationToken = default)
     {
-        var items = _albumBuilder.GetItems();
+        var items = await _albumBuilder.GetItemsAsync(cancellationToken);
         var manager = new AlbumManager<TItem>(items, _configuration);
         return manager;
     }
