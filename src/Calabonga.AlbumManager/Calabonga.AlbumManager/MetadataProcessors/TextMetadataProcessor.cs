@@ -27,23 +27,31 @@ public class TextMetadataProcessor : MetadataProcessor<AlbumImage>
         item.Description = lines[1];
     }
 
-    public override Task<bool> DeleteDataProcessAsync(AlbumImage item, CancellationToken cancellationToken)
+    public override Task<DeleteResult> DeleteDataProcessAsync(AlbumImage item, CancellationToken cancellationToken)
     {
         var textFilePath = Path.Combine(item.Path, Path.GetFileNameWithoutExtension(item.Name) + ".txt");
         if (!Path.Exists(textFilePath))
         {
-            return Task.FromResult(false);
+            return Task.FromResult(DeleteResult.NotFound);
         }
 
         try
         {
             File.Delete(textFilePath);
 
-            return Task.FromResult(true);
+            return Task.FromResult(DeleteResult.Deleted);
         }
         catch (Exception exception)
         {
-            return Task.FromResult(false);
+            return Task.FromResult(DeleteResult.Error);
         }
     }
+
+}
+public enum DeleteResult
+{
+    None,
+    NotFound,
+    Deleted,
+    Error
 }
