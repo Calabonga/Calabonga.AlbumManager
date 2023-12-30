@@ -10,7 +10,7 @@ var manager = await new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfigura
     .AddCreator<CreatorConfiguration>(x => x.SourcePath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Animals")
     .AddViewer<ViewerConfiguration>(_ => { })
     .AddMetadataReader<MetadataConfiguration>(_ => { })
-    .AddEditor<EditorConfiguration>(_ => { })
+    .AddCommander<CommanderConfiguration>(_ => { })
     .AddUploader<UploaderConfiguration>(_ => { })
     .BuildAsync(CancellationToken.None);
 
@@ -18,7 +18,7 @@ var manager = await new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfigura
 //    .AddCreator(x => x.SourcePath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Gallery")
 //    .AddViewer(x => x.TakeTop = 10)
 //    .AddMetadataReader(_ => {})
-//    .AddEditor(_ => {})
+//    .AddCommander(_ => {})
 //    .AddUploader(_ => {})
 //    .BuildAsync();
 

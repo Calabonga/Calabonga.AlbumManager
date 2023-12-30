@@ -23,7 +23,7 @@ public interface IConfiguration
     /// <summary>
     /// Configuration for Editor processing
     /// </summary>
-    IEditorConfiguration EditorConfiguration { get; }
+    ICommanderConfiguration CommanderConfiguration { get; }
 
     /// <summary>
     /// Configuration for Uploader processing

@@ -19,10 +19,10 @@ internal sealed class MetadataBuilder<TItem> : IMetadataBuilder<TItem>
         _albumBuilder = albumBuilder;
     }
 
-    public IEditorBuilder<TItem> AddMetadataReader<TMetadataConfiguration>(Action<TMetadataConfiguration> configuration)
+    public ICommanderBuilder<TItem> AddMetadataReader<TMetadataConfiguration>(Action<TMetadataConfiguration> configuration)
     {
         configuration((TMetadataConfiguration)_configuration.MetadataConfiguration);
-        return new EditorBuilder<TItem>(_configuration, _albumBuilder);
+        return new CommanderBuilder<TItem>(_configuration, _albumBuilder);
     }
 
 

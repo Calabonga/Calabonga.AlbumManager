@@ -1,4 +1,6 @@
 ﻿using Calabonga.AlbumsManager.Builders;
+using Calabonga.AlbumsManager.CommandProcessors;
+using Calabonga.AlbumsManager.CommandProcessors.Commands;
 using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Folder.Creator;
 using Calabonga.AlbumsManager.FolderTree.Creator;
@@ -24,7 +26,13 @@ public static class AlbumManagerBuilder
             {
                 x.SetMetadataProcessor(new TextMetadataProcessor());
             })
-            .AddEditor<EditorConfiguration>(_ => { })
+            .AddCommander<CommanderConfiguration>(x =>
+            {
+                x.SetCommandProcessor(new CommandProcessor(c =>
+                {
+                    c.AddCommand<GetImageByIdCommand, GetImageByIdCommandHandler>();
+                }));
+            })
             .AddUploader<UploaderConfiguration>(_ => { })
             .BuildAsync(CancellationToken.None);
 
@@ -37,7 +45,7 @@ public static class AlbumManagerBuilder
             })
             .AddViewer<ViewerConfiguration>(x => { })
             .AddMetadataReader<MetadataConfiguration>(_ => { })
-            .AddEditor<EditorConfiguration>(_ => { })
+            .AddCommander<CommanderConfiguration>(_ => { })
             .AddUploader<UploaderConfiguration>(_ => { })
             .BuildAsync(CancellationToken.None);
 }

@@ -24,7 +24,7 @@ public abstract class ConfigurationBase : IConfiguration
     /// <summary>
     /// Configuration for Editor processing
     /// </summary>
-    public virtual IEditorConfiguration EditorConfiguration { get; } = new EditorConfiguration();
+    public virtual ICommanderConfiguration CommanderConfiguration { get; } = new CommanderConfiguration();
 
     /// <summary>
     /// Configuration for Uploader processing
