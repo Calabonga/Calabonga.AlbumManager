@@ -20,7 +20,13 @@ public class DetailsModel : PageModel
     }
 
     [BindProperty(SupportsGet = true)]
+    public int PageIndex { get; set; }
+
+    [BindProperty(SupportsGet = true)]
     public string? FolderName { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public int PageSize { get; set; } = 5;
 
     public IEnumerable<string>? Commands { get; set; }
 
@@ -33,7 +39,7 @@ public class DetailsModel : PageModel
             return RedirectToPage("Error");
         }
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
-        var manager = await GetManager(folder);
+        var manager = await GetManager(folder, PageIndex, PageSize);
         Commands = manager.Commands;
         Images = manager.Items;
 
@@ -49,7 +55,7 @@ public class DetailsModel : PageModel
             return RedirectToPage("Error");
         }
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
-        var manager = await GetManager(folder);
+        var manager = await GetManager(folder, PageIndex, PageSize);
         Commands = manager.Commands;
         Images = manager.Items;
 
@@ -67,7 +73,7 @@ public class DetailsModel : PageModel
             return RedirectToPage("Error");
         }
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
-        var manager = await GetManager(folder);
+        var manager = await GetManager(folder, PageIndex, PageSize);
         Commands = manager.Commands;
         Images = manager.Items;
 
@@ -82,18 +88,36 @@ public class DetailsModel : PageModel
 
         return Page();
     }
+    public async Task<IActionResult> OnGetNextPage(int pageSize)
+    {
+        if (string.IsNullOrWhiteSpace(FolderName))
+        {
+            return RedirectToPage("Error");
+        }
 
-    private Task<AlbumManager<AlbumImage>> GetManager(string folderName)
+        var newPageIndex = PageIndex + 1;
+
+        var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
+        var manager = await GetManager(folder, PageIndex, pageSize);
+        Commands = manager.Commands;
+        Images = manager.Items;
+
+        await manager.ExecuteAsync<bool, NextPageCommand>(new NextPageCommand(PageIndex), HttpContext.RequestAborted);
+
+        return RedirectToPage("Details", new { PageIndex = newPageIndex, FolderName, PageSize = pageSize });
+    }
+
+    private Task<AlbumManager<AlbumImage>> GetManager(string folderName, int pageIndex, int pageSize)
     {
         if (string.IsNullOrEmpty(FolderName))
         {
             throw new NullReferenceException();
         }
 
-        return _memory.GetOrCreateAsync($"Manager_{folderName}", entry =>
+        return _memory.GetOrCreateAsync($"Manager_{folderName}_{pageIndex}_{pageSize}", entry =>
         {
             entry.SetSlidingExpiration(TimeSpan.FromSeconds(30));
-            return AlbumManagerBuilder.GetImagesFromFolderAsync(folderName);
+            return AlbumManagerBuilder.GetImagesFromFolderAsync(folderName, pageIndex, 1);
         })!;
     }
 }

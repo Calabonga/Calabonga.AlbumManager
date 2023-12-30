@@ -15,9 +15,14 @@ namespace Calabonga.AlbumsManager;
 /// </summary>
 public static class AlbumManagerBuilder
 {
-    public static async Task<AlbumManager<AlbumImage>> GetImagesFromFolderAsync(string folder)
+    public static async Task<AlbumManager<AlbumImage>> GetImagesFromFolderAsync(string folder, int pageIndex = 0, int pageSize = 0)
         => await new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfiguration, AlbumImage>()
-            .AddCreator<CreatorConfiguration>(x => x.SourcePath = folder)
+            .AddCreator<CreatorConfiguration>(x =>
+            {
+                x.PageIndex = pageIndex;
+                x.PageSize = pageSize;
+                x.SourcePath = folder;
+            })
             .AddViewer<ViewerConfiguration>(x =>
             {
                 x.AddImageProcessor(new TextWatermarkImageProcessor());
@@ -32,6 +37,7 @@ public static class AlbumManagerBuilder
                 {
                     c.AddCommand<GetImageByIdCommand, GetImageByIdCommandHandler>();
                     c.AddCommand<DeleteImageByIdCommand, DeleteImageByIdCommandHandler>();
+                    c.AddCommand<NextPageCommand, NextPageCommandHandler>();
                 }));
             })
             .AddUploader<UploaderConfiguration>(_ => { })
