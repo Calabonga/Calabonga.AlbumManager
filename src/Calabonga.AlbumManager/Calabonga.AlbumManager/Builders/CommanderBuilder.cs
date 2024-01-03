@@ -5,8 +5,9 @@ using Calabonga.AlbumsManager.Models;
 namespace Calabonga.AlbumsManager.Builders;
 
 /// <summary>
-/// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerEditorBuilder)
+/// Default implementation of command builder (CommandProcessor), that can processing some commands registered in pipeline.
 /// </summary>
+/// <typeparam name="TItem"></typeparam>
 internal sealed class CommanderBuilder<TItem> : ICommanderBuilder<TItem>
     where TItem : ItemBase
 {
@@ -19,7 +20,12 @@ internal sealed class CommanderBuilder<TItem> : ICommanderBuilder<TItem>
         _albumBuilder = albumBuilder;
     }
 
+    /// <summary>
+    /// Adds a command processor to  pipeline.
+    /// </summary>
+    /// <param name="configuration">configuration to add</param>
     public IUploaderBuilder<TItem> AddCommander<TCommanderConfiguration>(Action<TCommanderConfiguration> configuration)
+        where TCommanderConfiguration : ICommanderConfiguration
     {
         configuration((TCommanderConfiguration)_configuration.CommanderConfiguration);
         return new UploaderBuilder<TItem>(_configuration, _albumBuilder);

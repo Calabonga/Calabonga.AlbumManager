@@ -6,7 +6,7 @@ using Calabonga.PagedListCore;
 namespace Calabonga.AlbumsManager.Folder.Creator;
 
 /// <summary>
-/// // Calabonga: update summary (2023-10-28 10:26 FolderAlbumCreator)
+/// AlbumManager for folder with images.
 /// </summary>
 public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, AlbumImage>
 {

@@ -9,11 +9,14 @@ namespace Calabonga.AlbumsManager.Base;
 /// </summary>
 public interface IAlbumManager
 {
+    /// <summary>
+    /// Global interface configuration for &lt;see cref="AlbumManager{TItem}"/&gt; processing pipelines.
+    /// </summary>
     IConfiguration Configuration { get; }
 }
 
 /// <summary>
-/// // Calabonga: Summary required (GetImageById 2023-12-18 05:05)
+/// Generic interface for dependency injection and other manipulations.
 /// </summary>
 /// <typeparam name="TItem"></typeparam>
 public interface IAlbumManager<TItem> : IAlbumManager
@@ -24,6 +27,9 @@ public interface IAlbumManager<TItem> : IAlbumManager
     /// </summary>
     IEnumerable<TItem> Items { get; }
 
+    /// <summary>
+    /// AlbumBuilder that's can rebuild collection founded in folders.
+    /// </summary>
     IAlbumBuilder<TItem> AlbumBuilder { get; }
 
     /// <summary>
@@ -33,8 +39,8 @@ public interface IAlbumManager<TItem> : IAlbumManager
     void Remove(TItem item);
 
     /// <summary>
-    /// // Calabonga: Summary required (IAlbumManager 2023-12-30 01:44)
+    /// Updates collection of the items for current <see cref="AlbumManager{TItem}"/>
     /// </summary>
-    /// <param name="items"></param>
+    /// <param name="items">items for replacing</param>
     void SetItems(IEnumerable<TItem> items);
 }
