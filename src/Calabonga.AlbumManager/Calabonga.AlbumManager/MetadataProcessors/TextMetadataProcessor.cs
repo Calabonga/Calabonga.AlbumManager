@@ -8,7 +8,7 @@ namespace Calabonga.AlbumsManager.MetadataProcessors;
 /// </summary>
 public class TextMetadataProcessor : MetadataProcessor<AlbumImage>
 {
-    public override async Task ProcessAsync(AlbumImage item, CancellationToken cancellationToken)
+    public override async Task FindDataProcessAsync(AlbumImage item, CancellationToken cancellationToken)
     {
         item.Description += " >>>>> METADATA";
         var textFilePath = Path.Combine(item.Path, Path.GetFileNameWithoutExtension(item.Name) + ".txt");
@@ -26,4 +26,32 @@ public class TextMetadataProcessor : MetadataProcessor<AlbumImage>
         item.Title = lines[0];
         item.Description = lines[1];
     }
+
+    public override Task<DeleteResult> DeleteDataProcessAsync(AlbumImage item, CancellationToken cancellationToken)
+    {
+        var textFilePath = Path.Combine(item.Path, Path.GetFileNameWithoutExtension(item.Name) + ".txt");
+        if (!Path.Exists(textFilePath))
+        {
+            return Task.FromResult(DeleteResult.NotFound);
+        }
+
+        try
+        {
+            File.Delete(textFilePath);
+
+            return Task.FromResult(DeleteResult.Deleted);
+        }
+        catch (Exception exception)
+        {
+            return Task.FromResult(DeleteResult.Error);
+        }
+    }
+
+}
+public enum DeleteResult
+{
+    None,
+    NotFound,
+    Deleted,
+    Error
 }

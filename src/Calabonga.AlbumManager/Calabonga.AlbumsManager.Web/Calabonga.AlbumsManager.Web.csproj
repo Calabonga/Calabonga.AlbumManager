@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\Images\autoposters\0014.txt" />
+    <PackageReference Include="Calabonga.PagedListCore" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

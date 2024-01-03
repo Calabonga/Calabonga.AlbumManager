@@ -6,5 +6,5 @@
 public interface IAlbumBuilder<TItem>
     where TItem : class
 {
-    Task<List<TItem>> GetItemsAsync(CancellationToken cancellationToken);
+    Task<List<TItem>> GetItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken);
 }

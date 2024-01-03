@@ -20,8 +20,8 @@ internal sealed class FinalBuilder<TItem> : IFinalBuilder<TItem>
 
     public async Task<AlbumManager<TItem>> BuildAsync(CancellationToken cancellationToken = default)
     {
-        var items = await _albumBuilder.GetItemsAsync(cancellationToken);
-        var manager = new AlbumManager<TItem>(items, _configuration);
+        var items = await _albumBuilder.GetItemsAsync(0, 0, cancellationToken);
+        var manager = new AlbumManager<TItem>(items, _albumBuilder, _configuration);
         return manager;
     }
 }

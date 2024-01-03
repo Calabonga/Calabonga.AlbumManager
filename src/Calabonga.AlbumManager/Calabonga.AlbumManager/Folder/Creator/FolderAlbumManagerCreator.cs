@@ -1,6 +1,7 @@
 ﻿using Calabonga.AlbumsManager.Base.Builder;
 using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Models;
+using Calabonga.PagedListCore;
 
 namespace Calabonga.AlbumsManager.Folder.Creator;
 
@@ -15,7 +16,7 @@ public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, 
     /// <summary>
     /// Returns a collection for <see cref="AlbumImage"/> found in location provided
     /// </summary>
-    /// <returns></returns>
+    /// <returns>list of items</returns>
     protected override Task<List<AlbumImage>> ExecuteCreateAsync(CancellationToken cancellationToken)
     {
         if (!Path.Exists(Configuration.CreatorConfiguration.SourcePath))
@@ -37,13 +38,35 @@ public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, 
             return Task.FromResult(new List<AlbumImage>());
         }
 
-        return Task.FromResult(files.Select(x => new AlbumImage
+        if (Configuration.CreatorConfiguration.PageSize <= 0)
+        {
+            return Task.FromResult(files.Select(x => new AlbumImage
+            {
+                Path = directory.FullName,
+                Name = x.Name,
+                Description = "N/A",
+                FileSize = x.Length,
+                OriginalBytes = File.ReadAllBytes(Path.Combine(directory.FullName, x.Name))
+            }).ToList());
+        }
+
+        var pageIndex = Configuration.CreatorConfiguration.PageIndex;
+        var pageSize = Configuration.CreatorConfiguration.PageSize;
+
+        var pagedFiles = new PagedList<FileInfo>(files, pageIndex, pageSize, 0, files.Count);
+
+        var result = PagedList.From(pagedFiles, x => ConvertItems(x, directory));
+
+        return Task.FromResult(result.Items.ToList());
+    }
+
+    private IEnumerable<AlbumImage> ConvertItems(IEnumerable<FileInfo> fileInfos, DirectoryInfo directory)
+        => fileInfos.Select(x => new AlbumImage
         {
             Path = directory.FullName,
             Name = x.Name,
             Description = "N/A",
             FileSize = x.Length,
             OriginalBytes = File.ReadAllBytes(Path.Combine(directory.FullName, x.Name))
-        }).ToList());
-    }
+        });
 }

@@ -6,13 +6,7 @@ namespace Calabonga.AlbumsManager.CommandProcessors.Commands;
 /// <summary>
 /// Command for getting item by identifier (for example, <see cref="ItemBase.Name"/>)
 /// </summary>
-public class GetImageByIdCommand : ICommand<AlbumImage?>
-{
-    /// <summary>
-    /// Represents an image name as term for searching.
-    /// </summary>
-    public string ImageName { get; init; } = null!;
-}
+public record GetImageByIdCommand(string ImageName) : ICommand<AlbumImage?>;
 
 /// <summary>
 /// CommandHandler for getting item by identifier (for example, <see cref="ItemBase.Name"/>)
