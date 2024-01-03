@@ -5,7 +5,7 @@ using Calabonga.AlbumsManager.Models;
 namespace Calabonga.AlbumsManager.Builders;
 
 /// <summary>
-/// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerViewerBuilder)
+/// Default viewer builder as the third step for <see cref="AlbumManager{TItem}"/> processing configuration.
 /// </summary>
 internal sealed class ViewerBuilder<TItem> : IViewerBuilder<TItem>
     where TItem : ItemBase
@@ -19,7 +19,12 @@ internal sealed class ViewerBuilder<TItem> : IViewerBuilder<TItem>
         _albumBuilder = albumBuilder;
     }
 
+    /// <summary>
+    /// Append a viewer processing configuration.
+    /// </summary>
+    /// <param name="configuration"></param>
     public IMetadataBuilder<TItem> AddViewer<TViewerConfiguration>(Action<TViewerConfiguration> configuration)
+        where TViewerConfiguration : IViewerConfiguration
     {
         configuration((TViewerConfiguration)_configuration.ViewerConfiguration);
         return new MetadataBuilder<TItem>(_configuration, _albumBuilder);

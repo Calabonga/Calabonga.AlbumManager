@@ -1,4 +1,4 @@
-﻿@page "/details/{FolderName}"
+﻿@page "/details/{PageIndex}/{FolderName}"
 @using Calabonga.AlbumsManager.CommandProcessors.Commands
 @model DetailsModel
 @{
@@ -6,6 +6,16 @@
 }
 
 <h1>@ViewData["Title"] @Model.FolderName</h1>
+
+<div>
+    <p>Total: <span class="badge bg-primary">@Model.Images?.Count()</span></p>
+    
+    <div class="btn-group">
+        <a asp-page-handler="NextPage"
+           asp-route-pageSize="@Model.PageSize"
+           class="btn btn-outline-secondary">→</a>
+    </div>
+</div>
 
 @if (Model.SelectedImage is not null)
 {
@@ -26,12 +36,27 @@
         {
             <h1>@item.Title</h1>
         }
-        <p>
-            <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.ProcessedBytes!)" />
-            <small>@item.Description</small><br />
-            <a asp-page-handler="ImageById"
-               asp-route-fileName="@item.Name"
-               class="btn btn-secondary">@(nameof(GetImageByIdCommand))</a>
-        </p>
+        <div class="m-2">
+            <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.ProcessedBytes!)" class="img-fluid" />
+        </div>
+
+        <div class="mt-3">
+            <p class="lead">@item.Description</p>
+        </div>
+
+        <div class="mt-2">
+
+            <div class="btn-group">
+
+                <a asp-page-handler="ImageById"
+                   asp-route-fileName="@item.Name"
+                   class="btn btn-secondary">@(nameof(GetImageByIdCommand))</a>
+
+                <a asp-page-handler="DeleteImageById"
+                   asp-route-fileName="@item.Name"
+                   class="btn btn-danger">@(nameof(DeleteImageByIdCommand))</a>
+
+            </div>
+        </div>
     }
 }

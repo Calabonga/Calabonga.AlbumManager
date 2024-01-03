@@ -22,6 +22,7 @@ public class CommandProcessor : ICommandProcessor
     /// <param name="cancellationToken"></param>
     /// <returns>Result of executing</returns>
     public Task<TResult> Execute<TResult, TCommand>(TCommand command, CancellationToken cancellationToken)
+        where TCommand : ICommand<TResult>
     {
         _dictionary.TryGetValue(typeof(TCommand).Name, out var type);
         if (type is null)

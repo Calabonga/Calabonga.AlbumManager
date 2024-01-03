@@ -1,8 +1,9 @@
 ﻿using Calabonga.AlbumsManager.Configurations;
 
 namespace Calabonga.AlbumsManager.Base.Configurations;
+
 /// <summary>
-/// // Calabonga: update summary (2023-12-03 08:03 Configuration)
+/// Default abstract configuration for <see cref="AlbumManager{TItem}"/> processing pipelines.
 /// </summary>
 public abstract class ConfigurationBase : IConfiguration
 {

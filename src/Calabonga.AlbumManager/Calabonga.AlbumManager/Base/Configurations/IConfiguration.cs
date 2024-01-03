@@ -1,7 +1,7 @@
 ﻿namespace Calabonga.AlbumsManager.Base.Configurations;
 
 /// <summary>
-/// Global interface configuration
+/// Global interface configuration for &lt;see cref="AlbumManager{TItem}"/&gt; processing pipelines.
 /// </summary>
 public interface IConfiguration
 {

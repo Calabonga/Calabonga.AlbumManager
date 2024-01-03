@@ -5,12 +5,16 @@ using SkiaSharp;
 namespace Calabonga.AlbumsManager.ImageProcessors;
 
 /// <summary>
-/// // Calabonga: update summary (2023-12-09 08:42 DefaultImageView)
+/// Watermark text processor for <see cref="AlbumImage"/> processing pipeline.
 /// </summary>
 public class TextWatermarkImageProcessor : IImageProcessor
 {
     private const string WatermarkText = "ALBUM-MANAGER";
 
+    /// <summary>
+    /// Execute processing for <see cref="AlbumImage"/>.
+    /// </summary>
+    /// <param name="imageInfo"></param>
     public Task ProcessAsync(AlbumImage imageInfo)
     {
         if (imageInfo.OriginalBytes is null)

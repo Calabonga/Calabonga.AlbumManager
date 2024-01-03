@@ -1,15 +1,18 @@
-﻿using Calabonga.AlbumsManager.Models;
+﻿using Calabonga.AlbumsManager.Base.Configurations;
+using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager.Base.Builder;
 
 /// <summary>
-/// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerViewerBuilder)
+/// Interface abstraction for third step for <see cref="AlbumManager{TItem}"/> processing configuration.
 /// </summary>
-public interface IViewerBuilder<TItem> where TItem : ItemBase
+public interface IViewerBuilder<TItem>
+    where TItem : ItemBase
 {
     /// <summary>
-    /// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerViewerBuilder) 
+    /// Append a viewer processing configuration.
     /// </summary>
     /// <param name="configuration"></param>
-    IMetadataBuilder<TItem> AddViewer<TViewerConfiguration>(Action<TViewerConfiguration> configuration);
+    IMetadataBuilder<TItem> AddViewer<TViewerConfiguration>(Action<TViewerConfiguration> configuration)
+        where TViewerConfiguration : IViewerConfiguration;
 }

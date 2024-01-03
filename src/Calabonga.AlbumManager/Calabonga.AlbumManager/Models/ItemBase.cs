@@ -1,29 +1,32 @@
 ﻿namespace Calabonga.AlbumsManager.Models;
 
 /// <summary>
-/// // Calabonga: update summary (2023-12-09 04:47 ItemBase)
+/// Base class for items metadata representation
 /// </summary>
 public abstract class ItemBase
 {
     /// <summary>
-    /// // Calabonga: update summary (2023-11-18 02:36 AlbumItem)
+    /// File of folder name
     /// </summary>
     public string Name { get; set; } = null!;
 
     /// <summary>
-    /// // Calabonga: Summary required (ItemBase 2023-12-16 03:26)
+    /// Current item path
     /// </summary>
     public string Path { get; set; } = null!;
 
     /// <summary>
-    /// // Calabonga: update summary (2023-11-18 02:36 AlbumItem)
+    /// Description for current item.
     /// </summary>
     public string? Description { get; set; }
 
     /// <summary>
-    /// // Calabonga: update summary (2023-12-09 02:45 AlbumImage)
+    /// Indicates that current item can be processed with image processing.
     /// </summary>
     public virtual bool CanBeProcessed => true;
 
+    /// <summary>
+    /// Indicates that current item is a folder and can contain an images.
+    /// </summary>
     public virtual bool HasItems => false;
 }

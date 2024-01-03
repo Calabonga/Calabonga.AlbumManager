@@ -11,13 +11,25 @@ using Calabonga.AlbumsManager.Models;
 namespace Calabonga.AlbumsManager;
 
 /// <summary>
-/// // Calabonga: update summary (2023-12-03 08:10 AlbumManagerBuilderExtension)
+/// Helper for <see cref="AlbumManager{TItem}"/> configuration with predefined parameters on processors.
 /// </summary>
 public static class AlbumManagerBuilder
 {
-    public static async Task<AlbumManager<AlbumImage>> GetImagesFromFolderAsync(string folder)
+    /// <summary>
+    /// Returns an instance of the <see cref="AlbumManager{AlbumImage}"/> for one folder with many images.
+    /// </summary>
+    /// <param name="folder">The folder contains images.</param>
+    /// <param name="pageIndex">The page index for pagination. If the <see cref="pageSize"/> is equals 0 then paging ignored. Default value is 0.</param> 
+    /// <param name="pageSize">The number items in the page. When it is equals 0 then paging ignored. Default value is 0.</param>
+    /// <returns>an instance of the <see cref="AlbumManager{TItem}"/></returns>
+    public static async Task<AlbumManager<AlbumImage>> GetImagesFromFolderAsync(string folder, int pageIndex = 0, int pageSize = 0)
         => await new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfiguration, AlbumImage>()
-            .AddCreator<CreatorConfiguration>(x => x.SourcePath = folder)
+            .AddCreator<CreatorConfiguration>(x =>
+            {
+                x.PageIndex = pageIndex;
+                x.PageSize = pageSize;
+                x.SourcePath = folder;
+            })
             .AddViewer<ViewerConfiguration>(x =>
             {
                 x.AddImageProcessor(new TextWatermarkImageProcessor());
@@ -31,15 +43,26 @@ public static class AlbumManagerBuilder
                 x.SetCommandProcessor(new CommandProcessor(c =>
                 {
                     c.AddCommand<GetImageByIdCommand, GetImageByIdCommandHandler>();
+                    c.AddCommand<DeleteImageByIdCommand, DeleteImageByIdCommandHandler>();
+                    c.AddCommand<NextPageCommand, NextPageCommandHandler>();
                 }));
             })
             .AddUploader<UploaderConfiguration>(_ => { })
             .BuildAsync(CancellationToken.None);
 
-    public static async Task<AlbumManager<AlbumDirectory>> GetDirectoriesFromFolderTreeAsync(string folderTree)
+    /// <summary>
+    /// Returns an instance of the <see cref="AlbumManager{AlbumImage}"/> for one folder where many folders with images.
+    /// </summary>
+    /// <param name="folderTree">The folder contains images.</param>
+    /// <param name="pageIndex">The page index for pagination. If the <see cref="pageSize"/> is equals 0 then paging ignored. Default value is 0.</param> 
+    /// <param name="pageSize">The number items in the page. When it is equals 0 then paging ignored. Default value is 0.</param>
+    /// <returns>an instance of the <see cref="AlbumManager{TItem}"/></returns>
+    public static async Task<AlbumManager<AlbumDirectory>> GetDirectoriesFromFolderTreeAsync(string folderTree, int pageIndex = 0, int pageSize = 0)
         => await new AlbumManagerBuilder<FolderTreeAlbumBuilder, DefaultConfiguration, AlbumDirectory>()
             .AddCreator<CreatorConfiguration>(x =>
             {
+                x.PageIndex = pageIndex;
+                x.PageSize = pageSize;
                 x.SourcePath = folderTree;
                 x.SkipFoundImages = true;
             })

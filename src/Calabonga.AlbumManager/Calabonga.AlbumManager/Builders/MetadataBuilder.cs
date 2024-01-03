@@ -5,7 +5,7 @@ using Calabonga.AlbumsManager.Models;
 namespace Calabonga.AlbumsManager.Builders;
 
 /// <summary>
-/// // Calabonga: update summary (2023-11-11 12:16 AlbumManagerMetadataBuilder)
+/// Default implementation of the metadata builder. This is a second step for <see cref="AlbumManager{TItem}"/> processing configuration.
 /// </summary>
 internal sealed class MetadataBuilder<TItem> : IMetadataBuilder<TItem>
     where TItem : ItemBase
@@ -19,7 +19,12 @@ internal sealed class MetadataBuilder<TItem> : IMetadataBuilder<TItem>
         _albumBuilder = albumBuilder;
     }
 
+    /// <summary>
+    /// Appends a metadata configuration to processing pipeline.
+    /// </summary>
+    /// <param name="configuration"></param>
     public ICommanderBuilder<TItem> AddMetadataReader<TMetadataConfiguration>(Action<TMetadataConfiguration> configuration)
+        where TMetadataConfiguration : IMetadataConfiguration
     {
         configuration((TMetadataConfiguration)_configuration.MetadataConfiguration);
         return new CommanderBuilder<TItem>(_configuration, _albumBuilder);

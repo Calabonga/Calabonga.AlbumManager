@@ -1,15 +1,17 @@
-﻿using Calabonga.AlbumsManager.Models;
+﻿using Calabonga.AlbumsManager.Base.Configurations;
+using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager.Base.Builder;
 
 /// <summary>
-/// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerMetadataBuilder) 
+/// Interface abstraction for second step for <see cref="AlbumManager{TItem}"/> processing configuration.
 /// </summary>
 public interface IMetadataBuilder<TItem> where TItem : ItemBase
 {
     /// <summary>
-    /// // Calabonga: update summary (2023-11-11 12:15 AlbumManagerMetadataBuilder)
+    /// Appends a metadata configuration to processing pipeline.
     /// </summary>
     /// <param name="configuration"></param>
-    ICommanderBuilder<TItem> AddMetadataReader<TMetadataConfiguration>(Action<TMetadataConfiguration> configuration);
+    ICommanderBuilder<TItem> AddMetadataReader<TMetadataConfiguration>(Action<TMetadataConfiguration> configuration)
+        where TMetadataConfiguration : IMetadataConfiguration;
 }
