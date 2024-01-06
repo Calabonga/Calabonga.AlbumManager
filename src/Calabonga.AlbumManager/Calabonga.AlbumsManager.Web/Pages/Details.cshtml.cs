@@ -54,8 +54,31 @@ public class DetailsModel : PageModel
         Images = manager.Items;
 
         SelectedImage = await manager.ExecuteAsync<AlbumImage, GetImageByIdCommand>(
-            new GetImageByIdCommand { ImageName = fileName },
+            new GetImageByIdCommand(fileName),
             HttpContext.RequestAborted);
+
+        return Page();
+    }
+
+    public async Task<IActionResult> OnGetDeleteImageById(string fileName)
+    {
+        if (string.IsNullOrWhiteSpace(FolderName))
+        {
+            return RedirectToPage("Error");
+        }
+        var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
+        var manager = await GetManager(folder);
+        Commands = manager.Commands;
+        Images = manager.Items;
+
+        var isDeleteSuccess = await manager.ExecuteAsync<bool, DeleteImageByIdCommand>(
+            new DeleteImageByIdCommand(fileName),
+            HttpContext.RequestAborted);
+
+        if (isDeleteSuccess)
+        {
+            SelectedImage = null;
+        }
 
         return Page();
     }

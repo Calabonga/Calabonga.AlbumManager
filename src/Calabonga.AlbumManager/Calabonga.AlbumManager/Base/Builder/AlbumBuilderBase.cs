@@ -46,7 +46,7 @@ public abstract class AlbumBuilderBase<TConfiguration, TItem> : IAlbumBuilder<TI
             foreach (var loadedItem in createdItems)
             {
 
-                await processor.ProcessAsync(loadedItem, cancellationToken);
+                await processor.FindDataProcessAsync(loadedItem, cancellationToken);
             }
         }
 

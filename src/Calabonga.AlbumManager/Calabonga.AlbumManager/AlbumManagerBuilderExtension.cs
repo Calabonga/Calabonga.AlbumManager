@@ -31,6 +31,7 @@ public static class AlbumManagerBuilder
                 x.SetCommandProcessor(new CommandProcessor(c =>
                 {
                     c.AddCommand<GetImageByIdCommand, GetImageByIdCommandHandler>();
+                    c.AddCommand<DeleteImageByIdCommand, DeleteImageByIdCommandHandler>();
                 }));
             })
             .AddUploader<UploaderConfiguration>(_ => { })
