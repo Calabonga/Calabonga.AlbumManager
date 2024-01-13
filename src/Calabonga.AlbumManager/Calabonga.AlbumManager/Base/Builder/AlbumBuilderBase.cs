@@ -18,7 +18,7 @@ public abstract class AlbumBuilderBase<TConfiguration, TItem> : IAlbumBuilder<TI
     /// </summary>
     protected TConfiguration Configuration { get; }
 
-    public virtual async Task<List<TItem>> GetItemsAsync(CancellationToken cancellationToken = default)
+    public virtual async Task<List<TItem>> GetItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken)
     {
         var createdItems = await ExecuteCreateAsync(cancellationToken);
         var metadataItems = await ExecuteMetadataAsync(createdItems.ToList(), cancellationToken);

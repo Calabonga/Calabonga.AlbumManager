@@ -1,6 +1,6 @@
 ﻿using Calabonga.AlbumsManager.Base;
+using Calabonga.AlbumsManager.Base.Builder;
 using Calabonga.AlbumsManager.Base.Configurations;
-using Calabonga.AlbumsManager.CommandProcessors;
 using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager;
@@ -11,11 +11,11 @@ namespace Calabonga.AlbumsManager;
 public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
     where TItem : ItemBase
 {
+    private List<TItem> _items;
 
-    private readonly List<TItem> _items = new();
-
-    internal AlbumManager(IEnumerable<TItem> items, IConfiguration configuration)
+    internal AlbumManager(IEnumerable<TItem> items, IAlbumBuilder<TItem> albumBuilder, IConfiguration configuration)
     {
+        AlbumBuilder = albumBuilder;
         Configuration = configuration;
         _items = items.ToList();
     }
@@ -30,10 +30,21 @@ public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
     public IEnumerable<TItem> Items => _items;
 
     /// <summary>
+    /// // Calabonga: Summary required (AlbumManager 2023-12-30 01:46)
+    /// </summary>
+    public IAlbumBuilder<TItem> AlbumBuilder { get; }
+
+    /// <summary>
     /// Remove from collected items and delete image-file
     /// </summary>
     /// <param name="item"></param>
     public void Remove(TItem item) => _items.Remove(item);
+
+    /// <summary>
+    /// // Calabonga: Summary required (IAlbumManager 2023-12-30 01:44)
+    /// </summary>
+    /// <param name="items"></param>
+    public void SetItems(IEnumerable<TItem> items) => _items = items.ToList();
 
     /// <summary>
     /// Configuration used for files processing

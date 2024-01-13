@@ -7,6 +7,19 @@ namespace Calabonga.AlbumsManager.Configurations;
 /// </summary>
 public class CreatorConfiguration : ICreatorConfiguration
 {
+    /// <summary>
+    /// Current page index
+    /// </summary>
+    public int PageIndex { get; set; }
+
+    /// <summary>
+    /// Current page size
+    /// </summary>
+    public int PageSize { get; set; }
+
+    /// <summary>
+    /// Pattern for files search
+    /// </summary>
     public string SearchFilePattern => "*.png;*.jpg";
 
     /// <summary>

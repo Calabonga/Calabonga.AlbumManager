@@ -6,6 +6,16 @@
 public interface ICreatorConfiguration
 {
     /// <summary>
+    /// Current page index
+    /// </summary>
+    int PageIndex { get; }
+
+    /// <summary>
+    /// Current page size
+    /// </summary>
+    int PageSize { get; }
+
+    /// <summary>
     /// Pattern for files search
     /// </summary>
     string SearchFilePattern { get; }

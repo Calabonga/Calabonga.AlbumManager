@@ -1,4 +1,4 @@
-﻿@page "/details/{FolderName}"
+﻿@page "/details/{PageIndex}/{FolderName}"
 @using Calabonga.AlbumsManager.CommandProcessors.Commands
 @model DetailsModel
 @{
@@ -6,6 +6,16 @@
 }
 
 <h1>@ViewData["Title"] @Model.FolderName</h1>
+
+<div>
+    <p>Total: <span class="badge bg-primary">@Model.Images?.Count()</span></p>
+    
+    <div class="btn-group">
+        <a asp-page-handler="NextPage"
+           asp-route-pageSize="@Model.PageSize"
+           class="btn btn-outline-secondary">→</a>
+    </div>
+</div>
 
 @if (Model.SelectedImage is not null)
 {
