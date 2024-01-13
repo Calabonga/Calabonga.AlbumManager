@@ -30,7 +30,7 @@ public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
     public IEnumerable<TItem> Items => _items;
 
     /// <summary>
-    /// // Calabonga: Summary required (AlbumManager 2023-12-30 01:46)
+    /// AlbumBuilder that's can rebuild collection founded in folders.
     /// </summary>
     public IAlbumBuilder<TItem> AlbumBuilder { get; }
 
@@ -41,9 +41,9 @@ public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
     public void Remove(TItem item) => _items.Remove(item);
 
     /// <summary>
-    /// // Calabonga: Summary required (IAlbumManager 2023-12-30 01:44)
+    /// Updates collection of the items for current <see cref="AlbumManager{TItem}"/>
     /// </summary>
-    /// <param name="items"></param>
+    /// <param name="items">items for replacing</param>
     public void SetItems(IEnumerable<TItem> items) => _items = items.ToList();
 
     /// <summary>

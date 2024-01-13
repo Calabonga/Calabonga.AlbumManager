@@ -5,13 +5,22 @@ using Calabonga.AlbumsManager.Models;
 namespace Calabonga.AlbumsManager.FolderTree.Creator;
 
 /// <summary>
-/// // Calabonga: update summary (2023-10-28 10:26 FolderAlbumCreator)
+/// AlbumManager for folder tree of the folder with images.
 /// </summary>
 public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, AlbumDirectory>
 {
     public FolderTreeAlbumBuilder(DefaultConfiguration configuration)
-        : base(configuration) { }
+        : base(configuration)
+    {
+    }
 
+    /// <summary>
+    /// Returns items that was found in the folder
+    /// </summary>
+    /// <param name="pageIndex">current page index</param>
+    /// <param name="pageSize">page size for items</param>
+    /// <param name="cancellationToken">cancellation token</param>
+    /// <returns>a list of items</returns>
     public override async Task<List<AlbumDirectory>> GetItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken)
     {
         var result = new List<AlbumDirectory>();
@@ -38,32 +47,21 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
             if (!fileInfos.Any())
             {
                 // Calabonga: log files not found or empty (2023-11-04 09:24 FolderTreeAlbumCreator)
-                result.Add(new AlbumDirectory
-                {
-                    Description = "Files not found in directory",
-                    Name = directory.Name
-                });
+                result.Add(new AlbumDirectory { Description = "Files not found in directory", Name = directory.Name });
+
                 continue;
             }
 
             var files = fileInfos.Select(x => new AlbumImage
             {
                 Name = x.Name,
-                // Calabonga: Description update (2023-10-28 11:03 FolderAlbumCreator)
                 Description = $"file {nameof(x.CreationTime)}: {x.CreationTime}",
                 FileSize = x.Length
             }).ToList();
 
-            result.Add(new AlbumDirectory()
-            {
-                Items = files,
-                Description = $"Total files in directory: {files.Count}",
-                Name = directory.Name
-            });
+            result.Add(new AlbumDirectory() { Items = files, Description = $"Total files in directory: {files.Count}", Name = directory.Name });
         }
 
         return result;
     }
-
-
 }
