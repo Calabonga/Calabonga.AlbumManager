@@ -22,7 +22,7 @@ public class DeleteImageByIdCommandHandler : ICommandHandler<DeleteImageByIdComm
             }
 
             var manager = ((IAlbumManager<AlbumImage>)albumManager);
-            var item = manager.Items.SingleOrDefault(x => x.Name == command.ImageName);
+            var item = manager.PagedList.Items.SingleOrDefault(x => x.Name == command.ImageName);
             if (item is null)
             {
                 return false;

@@ -21,13 +21,12 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
     /// <param name="pageSize">page size for items</param>
     /// <param name="cancellationToken">cancellation token</param>
     /// <returns>a list of items</returns>
-    public override async Task<List<AlbumDirectory>> GetItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken)
+    public override async Task<IPagedList<AlbumDirectory>> GetItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken)
     {
-        var result = new List<AlbumDirectory>();
         if (!Path.Exists(Configuration.CreatorConfiguration.SourcePath))
         {
             // Calabonga: log info about no path found (2023-10-28 11:03 FolderAlbumCreator)
-            return result;
+            return PagedList.Empty<AlbumDirectory>();
         }
 
         var directoryInfo = new DirectoryInfo(Configuration.CreatorConfiguration.SourcePath);
@@ -37,31 +36,45 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
         if (!directories.Any())
         {
             // Calabonga: log directories not found or empty (2023-11-04 09:24 FolderTreeAlbumCreator)
-            return result;
+            return PagedList.Empty<AlbumDirectory>();
         }
 
-        foreach (var directory in directories)
+        var pagedDirectories = PagedList.Create(directories, pageIndex, pageSize, 0);
+
+        if (Configuration.CreatorConfiguration.SkipFoundImages)
         {
-            var fileInfos = directory.GetFiles();
-
-            if (!fileInfos.Any())
-            {
-                // Calabonga: log files not found or empty (2023-11-04 09:24 FolderTreeAlbumCreator)
-                result.Add(new AlbumDirectory { Description = "Files not found in directory", Name = directory.Name });
-
-                continue;
-            }
-
-            var files = fileInfos.Select(x => new AlbumImage
+            var pagedResult = PagedList.From(pagedDirectories, ConvertItemsToDirectory);
+            return pagedResult;
+        }
+        else
+        {
+            var pagedResult = PagedList.From(pagedDirectories, ConvertItemsToDirectoryWithFiles);
+            return pagedResult;
+        }
+    }
+    private IEnumerable<AlbumDirectory> ConvertItemsToDirectory(IEnumerable<DirectoryInfo> directories)
+        => directories.Select(x => new AlbumDirectory() { Name = x.Name });
+    private IEnumerable<AlbumDirectory> ConvertItemsToDirectoryWithFiles(IEnumerable<DirectoryInfo> directories)
+    {
             {
                 Name = x.Name,
-                Description = $"file {nameof(x.CreationTime)}: {x.CreationTime}",
-                FileSize = x.Length
-            }).ToList();
-
-            result.Add(new AlbumDirectory() { Items = files, Description = $"Total files in directory: {files.Count}", Name = directory.Name });
+                yield return new AlbumDirectory
+                {
+                    Description = $"Files found {fileInfos.Length}",
+                    Name = directory.Name,
+                    Items = fileInfos.Select(x => new AlbumImage
+                    {
+                        Path = directory.FullName,
+                        Name = x.Name,
+                        Description = "N/A",
+                        FileSize = x.Length,
+                        OriginalBytes = File.ReadAllBytes(Path.Combine(directory.FullName, x.Name))
+                    })
+                };
+            else
+            {
+                yield return new AlbumDirectory() { Name = directory.Name, Description = "No file found" };
+            }
         }
-
-        return result;
     }
 }

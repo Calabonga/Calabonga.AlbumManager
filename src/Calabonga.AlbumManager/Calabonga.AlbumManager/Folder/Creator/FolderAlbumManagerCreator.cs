@@ -17,12 +17,18 @@ public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, 
     /// Returns a collection for <see cref="AlbumImage"/> found in location provided
     /// </summary>
     /// <returns>list of items</returns>
-    protected override Task<List<AlbumImage>> ExecuteCreateAsync(CancellationToken cancellationToken)
+    protected override Task<IPagedList<AlbumImage>> ExecuteCreateAsync(CancellationToken cancellationToken)
     {
+        if (Configuration.CreatorConfiguration.PageSize <= 0)
+        {
+            // Calabonga: page size not provided (FolderAlbumManagerCreator 2024-01-16 08:52)
+            return Task.FromResult(PagedList.Empty<AlbumImage>());
+        }
+
         if (!Path.Exists(Configuration.CreatorConfiguration.SourcePath))
         {
             // Calabonga: log info about no path found (2023-10-28 11:03 FolderAlbumCreator)
-            return Task.FromResult(new List<AlbumImage>());
+            return Task.FromResult(PagedList.Empty<AlbumImage>());
         }
 
         var directory = new DirectoryInfo(Configuration.CreatorConfiguration.SourcePath);
@@ -30,25 +36,7 @@ public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, 
             ? new[] { "*.png;", "*.jpg" }
             : Configuration.CreatorConfiguration.SearchFilePattern.Split(';');
 
-        var files = types.SelectMany(x => directory.GetFiles(x)).ToList();
-
-        if (!files.Any())
-        {
-            // Calabonga: log info about no items found (2023-10-28 11:03 FolderAlbumCreator)
-            return Task.FromResult(new List<AlbumImage>());
-        }
-
-        if (Configuration.CreatorConfiguration.PageSize <= 0)
-        {
-            return Task.FromResult(files.Select(x => new AlbumImage
-            {
-                Path = directory.FullName,
-                Name = x.Name,
-                Description = "N/A",
-                FileSize = x.Length,
-                OriginalBytes = File.ReadAllBytes(Path.Combine(directory.FullName, x.Name))
-            }).ToList());
-        }
+        var files = types.SelectMany(x => directory.GetFiles(x));
 
         var pageIndex = Configuration.CreatorConfiguration.PageIndex;
         var pageSize = Configuration.CreatorConfiguration.PageSize;
@@ -57,7 +45,7 @@ public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, 
 
         var result = PagedList.From(pagedFiles, x => ConvertItems(x, directory));
 
-        return Task.FromResult(result.Items.ToList());
+        return Task.FromResult(result);
     }
 
     private IEnumerable<AlbumImage> ConvertItems(IEnumerable<FileInfo> fileInfos, DirectoryInfo directory)

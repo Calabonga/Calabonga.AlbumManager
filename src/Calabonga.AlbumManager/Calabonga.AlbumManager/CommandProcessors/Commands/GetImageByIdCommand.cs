@@ -25,6 +25,7 @@ public class GetImageByIdCommandHandler : ICommandHandler<GetImageByIdCommand, A
         var albumManager = context.AlbumManager;
 
         var item = ((IAlbumManager<AlbumImage>)albumManager!)
+            .PagedList
             .Items
             .SingleOrDefault(x => x.Name == command.ImageName);
 

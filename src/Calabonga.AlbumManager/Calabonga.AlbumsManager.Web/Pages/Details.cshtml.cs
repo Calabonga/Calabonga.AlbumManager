@@ -1,5 +1,6 @@
 ﻿using Calabonga.AlbumsManager.CommandProcessors.Commands;
 using Calabonga.AlbumsManager.Models;
+using Calabonga.PagedListCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
@@ -41,12 +42,12 @@ public class DetailsModel : PageModel
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
         var manager = await GetManager(folder, PageIndex, PageSize);
         Commands = manager.Commands;
-        Images = manager.Items;
+        PagedList = manager.PagedList;
 
         return Page();
     }
 
-    public IEnumerable<AlbumImage>? Images { get; set; }
+    public IPagedList<AlbumImage>? PagedList { get; set; }
 
     public async Task<IActionResult> OnGetImageById(string fileName)
     {
@@ -57,7 +58,7 @@ public class DetailsModel : PageModel
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
         var manager = await GetManager(folder, PageIndex, PageSize);
         Commands = manager.Commands;
-        Images = manager.Items;
+        PagedList = manager.PagedList;
 
         SelectedImage = await manager.ExecuteAsync<AlbumImage, GetImageByIdCommand>(
             new GetImageByIdCommand(fileName),
@@ -75,7 +76,7 @@ public class DetailsModel : PageModel
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
         var manager = await GetManager(folder, PageIndex, PageSize);
         Commands = manager.Commands;
-        Images = manager.Items;
+        PagedList = manager.PagedList;
 
         var isDeleteSuccess = await manager.ExecuteAsync<bool, DeleteImageByIdCommand>(
             new DeleteImageByIdCommand(fileName),
@@ -88,36 +89,8 @@ public class DetailsModel : PageModel
 
         return Page();
     }
-    public async Task<IActionResult> OnGetNextPage(int pageSize)
-    {
-        if (string.IsNullOrWhiteSpace(FolderName))
-        {
-            return RedirectToPage("Error");
-        }
-
         var newPageIndex = PageIndex + 1;
 
-        var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
-        var manager = await GetManager(folder, PageIndex, pageSize);
-        Commands = manager.Commands;
-        Images = manager.Items;
-
-        await manager.ExecuteAsync<bool, NextPageCommand>(new NextPageCommand(PageIndex), HttpContext.RequestAborted);
 
         return RedirectToPage("Details", new { PageIndex = newPageIndex, FolderName, PageSize = pageSize });
-    }
-
-    private Task<AlbumManager<AlbumImage>> GetManager(string folderName, int pageIndex, int pageSize)
-    {
-        if (string.IsNullOrEmpty(FolderName))
-        {
-            throw new NullReferenceException();
-        }
-
-        return _memory.GetOrCreateAsync($"Manager_{folderName}_{pageIndex}_{pageSize}", entry =>
-        {
-            entry.SetSlidingExpiration(TimeSpan.FromSeconds(30));
-            return AlbumManagerBuilder.GetImagesFromFolderAsync(folderName, pageIndex, 1);
-        })!;
-    }
 }

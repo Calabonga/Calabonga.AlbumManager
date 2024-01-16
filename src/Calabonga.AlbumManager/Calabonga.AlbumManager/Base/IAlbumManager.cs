@@ -1,6 +1,7 @@
 ﻿using Calabonga.AlbumsManager.Base.Builder;
 using Calabonga.AlbumsManager.Base.Configurations;
 using Calabonga.AlbumsManager.Models;
+using Calabonga.PagedListCore;
 
 namespace Calabonga.AlbumsManager.Base;
 
@@ -23,9 +24,9 @@ public interface IAlbumManager<TItem> : IAlbumManager
     where TItem : ItemBase
 {
     /// <summary>
-    /// Items in <see cref="AlbumManager{TItem}"/> founded for managing.
+    /// PagedList in <see cref="AlbumManager{TItem}"/> founded for managing.
     /// </summary>
-    IEnumerable<TItem> Items { get; }
+    public IPagedList<TItem> PagedList { get; }
 
     /// <summary>
     /// AlbumBuilder that's can rebuild collection founded in folders.
@@ -42,5 +43,5 @@ public interface IAlbumManager<TItem> : IAlbumManager
     /// Updates collection of the items for current <see cref="AlbumManager{TItem}"/>
     /// </summary>
     /// <param name="items">items for replacing</param>
-    void SetItems(IEnumerable<TItem> items);
+    void SetItems(IPagedList<TItem> items);
 }
