@@ -1,5 +1,6 @@
 ﻿using Calabonga.AlbumsManager.Base.Configurations;
 using Calabonga.AlbumsManager.Models;
+using Calabonga.PagedListCore;
 
 namespace Calabonga.AlbumsManager.Base.Builder;
 
@@ -18,10 +19,10 @@ public abstract class AlbumBuilderBase<TConfiguration, TItem> : IAlbumBuilder<TI
     /// </summary>
     protected TConfiguration Configuration { get; }
 
-    public virtual async Task<List<TItem>> GetItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken)
+    public virtual async Task<IPagedList<TItem>> GetItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken)
     {
         var createdItems = await ExecuteCreateAsync(cancellationToken);
-        var metadataItems = await ExecuteMetadataAsync(createdItems.ToList(), cancellationToken);
+        var metadataItems = await ExecuteMetadataAsync(createdItems, cancellationToken);
         var viewedItems = await ExecuteViewerAsync(metadataItems, cancellationToken);
 
         return viewedItems;
@@ -31,10 +32,10 @@ public abstract class AlbumBuilderBase<TConfiguration, TItem> : IAlbumBuilder<TI
     /// Returns a collection for <see cref="TItem"/> found in location provided
     /// </summary>
     /// <returns></returns>
-    protected virtual Task<List<TItem>> ExecuteCreateAsync(CancellationToken cancellationToken)
-        => Task.FromResult(new List<TItem>());
+    protected virtual Task<IPagedList<TItem>> ExecuteCreateAsync(CancellationToken cancellationToken)
+        => Task.FromResult(PagedList.Empty<TItem>());
 
-    protected virtual async Task<List<TItem>> ExecuteMetadataAsync(List<TItem> createdItems, CancellationToken cancellationToken)
+    protected virtual async Task<IPagedList<TItem>> ExecuteMetadataAsync(IPagedList<TItem> createdItems, CancellationToken cancellationToken)
     {
         if (Configuration.MetadataConfiguration.MetadataProcessor is null)
         {
@@ -43,7 +44,7 @@ public abstract class AlbumBuilderBase<TConfiguration, TItem> : IAlbumBuilder<TI
 
         if (Configuration.MetadataConfiguration.MetadataProcessor is MetadataProcessor<TItem> processor)
         {
-            foreach (var loadedItem in createdItems)
+            foreach (var loadedItem in createdItems.Items)
             {
 
                 await processor.FindDataProcessAsync(loadedItem, cancellationToken);
@@ -53,14 +54,14 @@ public abstract class AlbumBuilderBase<TConfiguration, TItem> : IAlbumBuilder<TI
         return createdItems;
     }
 
-    protected virtual async Task<List<TItem>> ExecuteViewerAsync(List<TItem> metadataItems, CancellationToken cancellationToken)
+    protected virtual async Task<IPagedList<TItem>> ExecuteViewerAsync(IPagedList<TItem> metadataItems, CancellationToken cancellationToken)
     {
         if (!Configuration.ViewerConfiguration.ImageProcessors.Any())
         {
             return metadataItems;
         }
 
-        foreach (var item in metadataItems)
+        foreach (var item in metadataItems.Items)
         {
             if (!item.CanBeProcessed)
             {

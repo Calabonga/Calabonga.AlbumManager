@@ -1,4 +1,5 @@
 ﻿using Calabonga.AlbumsManager.Models;
+using Calabonga.PagedListCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Calabonga.AlbumsManager.Web.Pages;
@@ -24,8 +25,8 @@ public class IndexModel : PageModel
         _logger.LogInformation(folder);
         Manager = await AlbumManagerBuilder.GetDirectoriesFromFolderTreeAsync(folder);
 
-        Directories = Manager.Items;
+        PagedList = Manager.PagedList;
     }
 
-    public IEnumerable<AlbumDirectory>? Directories { get; set; }
+    public IPagedList<AlbumDirectory>? PagedList { get; set; }
 }

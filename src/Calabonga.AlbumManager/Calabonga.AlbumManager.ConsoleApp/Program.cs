@@ -24,14 +24,14 @@ var manager = await new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfigura
 
 Console.WriteLine(manager.ToString());
 
-var view = manager.Items;
+var view = manager.PagedList;
 
-//foreach (var item in view.Items)
+//foreach (var item in view.PagedList)
 //{
 //    Console.WriteLine($"{item.FileName}- {((double)item.FileSize / 1024):F2} Kb");
 //}
 
-//foreach (var item in view.Items)
+//foreach (var item in view.PagedList)
 //{
-//    Console.WriteLine($"{item.DirectoryName} - {item.Items?.Count() ?? 0} items count");
+//    Console.WriteLine($"{item.DirectoryName} - {item.PagedList?.Count() ?? 0} items count");
 //}

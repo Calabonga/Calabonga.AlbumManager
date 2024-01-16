@@ -2,6 +2,7 @@
 using Calabonga.AlbumsManager.Base.Builder;
 using Calabonga.AlbumsManager.Base.Configurations;
 using Calabonga.AlbumsManager.Models;
+using Calabonga.PagedListCore;
 
 namespace Calabonga.AlbumsManager;
 
@@ -11,13 +12,13 @@ namespace Calabonga.AlbumsManager;
 public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
     where TItem : ItemBase
 {
-    private List<TItem> _items;
 
-    internal AlbumManager(IEnumerable<TItem> items, IAlbumBuilder<TItem> albumBuilder, IConfiguration configuration)
+
+    internal AlbumManager(IPagedList<TItem> items, IAlbumBuilder<TItem> albumBuilder, IConfiguration configuration)
     {
         AlbumBuilder = albumBuilder;
         Configuration = configuration;
-        _items = items.ToList();
+        PagedList = items;
     }
 
     public IEnumerable<string> Commands
@@ -25,9 +26,9 @@ public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
            ?? Enumerable.Empty<string>();
 
     /// <summary>
-    /// Items in <see cref="AlbumManager{TItem}"/> founded for managing.
+    /// PagedList in <see cref="AlbumManager{TItem}"/> founded for managing.
     /// </summary>
-    public IEnumerable<TItem> Items => _items;
+    public IPagedList<TItem> PagedList { get; private set; }
 
     /// <summary>
     /// AlbumBuilder that's can rebuild collection founded in folders.
@@ -38,13 +39,13 @@ public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
     /// Remove from collected items and delete image-file
     /// </summary>
     /// <param name="item"></param>
-    public void Remove(TItem item) => _items.Remove(item);
+    public void Remove(TItem item) => PagedList.Items.Remove(item);
 
     /// <summary>
     /// Updates collection of the items for current <see cref="AlbumManager{TItem}"/>
     /// </summary>
     /// <param name="items">items for replacing</param>
-    public void SetItems(IEnumerable<TItem> items) => _items = items.ToList();
+    public void SetItems(IPagedList<TItem> items) => PagedList = items;
 
     /// <summary>
     /// Configuration used for files processing

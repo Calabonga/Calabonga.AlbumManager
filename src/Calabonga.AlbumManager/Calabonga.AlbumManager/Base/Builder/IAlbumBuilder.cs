@@ -1,4 +1,6 @@
-﻿namespace Calabonga.AlbumsManager.Base.Builder;
+﻿using Calabonga.PagedListCore;
+
+namespace Calabonga.AlbumsManager.Base.Builder;
 
 /// <summary>
 /// Interface for <see cref="AlbumManager{TItem}"/> items search in the folders.
@@ -13,5 +15,5 @@ public interface IAlbumBuilder<TItem>
     /// <param name="pageSize">page size for items</param>
     /// <param name="cancellationToken">cancellation token</param>
     /// <returns>a list of items</returns>
-    Task<List<TItem>> GetItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken);
+    Task<IPagedList<TItem>> GetItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken);
 }
