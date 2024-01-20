@@ -1,0 +1,23 @@
+﻿@page "{FolderName}"
+@model Calabonga.AlbumsManager.Web.Pages.UploadFileModel
+@{
+    ViewData["Title"] = "Загрузка в папку " + Model.FolderName;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (TempData["Message"] is not null)
+{
+    var args = TempData["Message"]!.ToString()!.Split('|');
+    <div class="alert alert-@args[0]">@args[1]</div>
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <input type="file" asp-for="@Model.FormFile" class="form-control"/>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Загрузить</button>
+    </div>
+
+</form>

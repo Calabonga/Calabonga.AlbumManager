@@ -1,4 +1,5 @@
-﻿using Calabonga.AlbumsManager.Models;
+﻿using Calabonga.AlbumsManager.CommandProcessors.Commands;
+using Calabonga.AlbumsManager.Models;
 using Calabonga.PagedListCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -54,5 +55,23 @@ public class IndexModel : PageModel
         ImagesPagedList = manager.PagedList;
 
         return Page();
+    }
+
+    public async Task<IActionResult> OnGetDeleteImageById(string fileName)
+    {
+        if (string.IsNullOrWhiteSpace(FolderName))
+        {
+            return RedirectToPage("Error");
+        }
+
+        var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
+        var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(folder, PageIndex2, 1);
+        ImagesPagedList = manager.PagedList;
+
+        await manager.ExecuteAsync<bool, DeleteImageByIdCommand>(
+            new DeleteImageByIdCommand(fileName),
+            HttpContext.RequestAborted);
+
+        return RedirectToPage("Index", new { PageIndex2 = 0 });
     }
 }
