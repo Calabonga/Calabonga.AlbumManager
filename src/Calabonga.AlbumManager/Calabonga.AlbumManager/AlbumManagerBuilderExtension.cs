@@ -4,8 +4,6 @@ using Calabonga.AlbumsManager.CommandProcessors.Commands;
 using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Folder.Creator;
 using Calabonga.AlbumsManager.FolderTree.Creator;
-using Calabonga.AlbumsManager.ImageProcessors;
-using Calabonga.AlbumsManager.MetadataProcessors;
 using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager;
@@ -22,7 +20,7 @@ public static class AlbumManagerBuilder
     /// <param name="pageIndex">The page index for pagination. If the <see cref="pageSize"/> is equals 0 then paging ignored. Default value is 0.</param> 
     /// <param name="pageSize">The number items in the page. When it is equals 0 then paging ignored. Default value is 0.</param>
     /// <returns>an instance of the <see cref="AlbumManager{TItem}"/></returns>
-    public static async Task<AlbumManager<AlbumImage>> GetImagesFromFolderAsync(string folder, int pageIndex = 0, int pageSize = 0)
+    public static async Task<AlbumManager<AlbumImage>> GetImagesFromFolderAsync(string folder, int pageIndex, int pageSize)
         => await new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfiguration, AlbumImage>()
             .AddCreator<CreatorConfiguration>(x =>
             {
@@ -32,11 +30,11 @@ public static class AlbumManagerBuilder
             })
             .AddViewer<ViewerConfiguration>(x =>
             {
-                x.AddImageProcessor(new TextWatermarkImageProcessor());
+                //x.AddImageProcessor(new TextWatermarkImageProcessor());
             })
             .AddMetadataReader<MetadataConfiguration>(x =>
             {
-                x.SetMetadataProcessor(new TextMetadataProcessor());
+                //x.SetMetadataProcessor(new TextMetadataProcessor());
             })
             .AddCommander<CommanderConfiguration>(x =>
             {
@@ -44,7 +42,6 @@ public static class AlbumManagerBuilder
                 {
                     c.AddCommand<GetImageByIdCommand, GetImageByIdCommandHandler>();
                     c.AddCommand<DeleteImageByIdCommand, DeleteImageByIdCommandHandler>();
-                    c.AddCommand<NextPageCommand, NextPageCommandHandler>();
                 }));
             })
             .AddUploader<UploaderConfiguration>(_ => { })
@@ -57,7 +54,7 @@ public static class AlbumManagerBuilder
     /// <param name="pageIndex">The page index for pagination. If the <see cref="pageSize"/> is equals 0 then paging ignored. Default value is 0.</param> 
     /// <param name="pageSize">The number items in the page. When it is equals 0 then paging ignored. Default value is 0.</param>
     /// <returns>an instance of the <see cref="AlbumManager{TItem}"/></returns>
-    public static async Task<AlbumManager<AlbumDirectory>> GetDirectoriesFromFolderTreeAsync(string folderTree, int pageIndex = 0, int pageSize = 0)
+    public static async Task<AlbumManager<AlbumDirectory>> GetDirectoriesFromFolderTreeAsync(string folderTree, int pageIndex, int pageSize)
         => await new AlbumManagerBuilder<FolderTreeAlbumBuilder, DefaultConfiguration, AlbumDirectory>()
             .AddCreator<CreatorConfiguration>(x =>
             {

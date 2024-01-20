@@ -1,21 +1,11 @@
-﻿@page "/details/{PageIndex}/{FolderName}"
+﻿@page "/details/{PageIndex=0}/{FolderName}"
 @using Calabonga.AlbumsManager.CommandProcessors.Commands
 @model DetailsModel
 @{
-    ViewData["Title"] = "Images from folder";
+    ViewData["Title"] = Model.FolderName;
 }
 
-<h1>@ViewData["Title"] @Model.FolderName</h1>
-
-<div>
-    <p>Total: <span class="badge bg-primary">@Model.Images?.Count()</span></p>
-    
-    <div class="btn-group">
-        <a asp-page-handler="NextPage"
-           asp-route-pageSize="@Model.PageSize"
-           class="btn btn-outline-secondary">→</a>
-    </div>
-</div>
+<h1>@ViewData["Title"]</h1>
 
 @if (Model.SelectedImage is not null)
 {
@@ -24,20 +14,37 @@
     </div>
 }
 
-@if (Model.Images is not null && Model.Images.Any())
+@if (Model.PagedList is not null && Model.PagedList.Items.Any())
 {
-    foreach (var item in Model.Images)
+    @if (Model.PagedList.HasPreviousPage)
+    {
+        <a class="btn btn-outline-secondary" asp-page="Details" asp-route-PageIndex="@(Model.PagedList.PageIndex-1)" asp-route-FolderName="@Model.FolderName">←</a>
+    }
+    else
+    {
+        <button class="btn btn-outline-secondary" disabled>←</button>
+    }
+    @if (Model.PagedList.HasNextPage)
+    {
+        <a class="btn btn-outline-secondary" asp-page="Details" asp-route-PageIndex="@(Model.PagedList.PageIndex+1)" asp-route-FolderName="@Model.FolderName">→</a>
+    }
+    else
+    {
+        <button class="btn btn-outline-secondary" disabled>→</button>
+    }
+
+    foreach (var item in Model.PagedList.Items)
     {
         @if (string.IsNullOrEmpty(item.Title))
         {
-            <h1>@item.Name</h1>
+            <h3>@item.Name</h3>
         }
         else
         {
-            <h1>@item.Title</h1>
+            <h2>@item.Title</h2>
         }
         <div class="m-2">
-            <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.ProcessedBytes!)" class="img-fluid" />
+            <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.OriginalBytes!)" class="img-fluid" />
         </div>
 
         <div class="mt-3">

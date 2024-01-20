@@ -1,12 +1,10 @@
 ﻿using Calabonga.AlbumsManager.Base.Builder;
 using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Models;
+using Calabonga.PagedListCore;
 
 namespace Calabonga.AlbumsManager.FolderTree.Creator;
 
-/// <summary>
-/// AlbumManager for folder tree of the folder with images.
-/// </summary>
 public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, AlbumDirectory>
 {
     public FolderTreeAlbumBuilder(DefaultConfiguration configuration)
@@ -31,7 +29,7 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
 
         var directoryInfo = new DirectoryInfo(Configuration.CreatorConfiguration.SourcePath);
 
-        var directories = directoryInfo.GetDirectories();
+        var directories = directoryInfo.GetDirectories().ToList();
 
         if (!directories.Any())
         {
@@ -39,7 +37,7 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
             return PagedList.Empty<AlbumDirectory>();
         }
 
-        var pagedDirectories = PagedList.Create(directories, pageIndex, pageSize, 0);
+        var pagedDirectories = PagedList.Create(directories, pageIndex, pageSize == 0 ? 10 : pageSize, 0);
 
         if (Configuration.CreatorConfiguration.SkipFoundImages)
         {
@@ -52,12 +50,19 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
             return pagedResult;
         }
     }
+
     private IEnumerable<AlbumDirectory> ConvertItemsToDirectory(IEnumerable<DirectoryInfo> directories)
         => directories.Select(x => new AlbumDirectory() { Name = x.Name });
+
     private IEnumerable<AlbumDirectory> ConvertItemsToDirectoryWithFiles(IEnumerable<DirectoryInfo> directories)
     {
+
+        foreach (var directory in directories)
+        {
+            var fileInfos = directory.GetFiles();
+            if (fileInfos.Any())
             {
-                Name = x.Name,
+                // Calabonga: log files not found or empty (2023-11-04 09:24 FolderTreeAlbumCreator)
                 yield return new AlbumDirectory
                 {
                     Description = $"Files found {fileInfos.Length}",
@@ -71,6 +76,8 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
                         OriginalBytes = File.ReadAllBytes(Path.Combine(directory.FullName, x.Name))
                     })
                 };
+
+            }
             else
             {
                 yield return new AlbumDirectory() { Name = directory.Name, Description = "No file found" };

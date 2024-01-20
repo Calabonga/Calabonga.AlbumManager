@@ -20,14 +20,11 @@ public class DetailsModel : PageModel
         _environment = environment;
     }
 
-    [BindProperty(SupportsGet = true)]
-    public int PageIndex { get; set; }
+    [BindProperty(SupportsGet = true)] public int PageIndex { get; set; }
 
-    [BindProperty(SupportsGet = true)]
-    public string? FolderName { get; set; }
+    [BindProperty(SupportsGet = true)] public string? FolderName { get; set; }
 
-    [BindProperty(SupportsGet = true)]
-    public int PageSize { get; set; } = 5;
+    [BindProperty(SupportsGet = true)] public int PageSize { get; set; }
 
     public IEnumerable<string>? Commands { get; set; }
 
@@ -39,10 +36,12 @@ public class DetailsModel : PageModel
         {
             return RedirectToPage("Error");
         }
+
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
-        var manager = await GetManager(folder, PageIndex, PageSize);
+        var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(folder, PageIndex, 3);
         Commands = manager.Commands;
         PagedList = manager.PagedList;
+        PageSize = manager.Configuration.CreatorConfiguration.PageSize;
 
         return Page();
     }
@@ -55,8 +54,9 @@ public class DetailsModel : PageModel
         {
             return RedirectToPage("Error");
         }
+
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
-        var manager = await GetManager(folder, PageIndex, PageSize);
+        var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(folder, PageIndex, PageSize);
         Commands = manager.Commands;
         PagedList = manager.PagedList;
 
@@ -73,8 +73,9 @@ public class DetailsModel : PageModel
         {
             return RedirectToPage("Error");
         }
+
         var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
-        var manager = await GetManager(folder, PageIndex, PageSize);
+        var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(folder, PageIndex, PageSize);
         Commands = manager.Commands;
         PagedList = manager.PagedList;
 
@@ -89,8 +90,4 @@ public class DetailsModel : PageModel
 
         return Page();
     }
-        var newPageIndex = PageIndex + 1;
-
-
-        return RedirectToPage("Details", new { PageIndex = newPageIndex, FolderName, PageSize = pageSize });
 }
