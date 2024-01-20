@@ -27,7 +27,9 @@ internal sealed class FinalBuilder<TItem> : IFinalBuilder<TItem>
     /// <returns>an instance <see cref="AlbumManager{TItem}"/> </returns>
     public async Task<AlbumManager<TItem>> BuildAsync(CancellationToken cancellationToken = default)
     {
-        var items = await _albumBuilder.GetItemsAsync(0, 0, cancellationToken);
+        var pageIndex = _configuration.CreatorConfiguration.PageIndex;
+        var pageSize = _configuration.CreatorConfiguration.PageSize;
+        var items = await _albumBuilder.GetItemsAsync(pageIndex, pageSize, cancellationToken);
         var manager = new AlbumManager<TItem>(items, _albumBuilder, _configuration);
         return manager;
     }

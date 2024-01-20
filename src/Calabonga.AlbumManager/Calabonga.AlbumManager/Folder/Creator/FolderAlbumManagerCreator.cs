@@ -36,12 +36,13 @@ public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, 
             ? new[] { "*.png;", "*.jpg" }
             : Configuration.CreatorConfiguration.SearchFilePattern.Split(';');
 
-        var files = types.SelectMany(x => directory.GetFiles(x));
+        var files = types.SelectMany(x => directory.GetFiles(x)).ToList();
 
         var pageIndex = Configuration.CreatorConfiguration.PageIndex;
         var pageSize = Configuration.CreatorConfiguration.PageSize;
 
-        var pagedFiles = new PagedList<FileInfo>(files, pageIndex, pageSize, 0, files.Count);
+        //var pagedFiles = new PagedList<FileInfo>(files, pageIndex, pageSize, 0, files.Count);
+        var pagedFiles = PagedList.Create(files, pageIndex, pageSize == 0 ? 10 : pageSize, 0);
 
         var result = PagedList.From(pagedFiles, x => ConvertItems(x, directory));
 

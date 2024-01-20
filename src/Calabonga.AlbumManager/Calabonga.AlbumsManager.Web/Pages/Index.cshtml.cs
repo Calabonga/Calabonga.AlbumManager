@@ -1,5 +1,6 @@
 ﻿using Calabonga.AlbumsManager.Models;
 using Calabonga.PagedListCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Calabonga.AlbumsManager.Web.Pages;
@@ -17,16 +18,41 @@ public class IndexModel : PageModel
         _logger = logger;
     }
 
+    [BindProperty(SupportsGet = true)]
+    public int PageIndex { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public int PageIndex2 { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public string? FolderName { get; set; }
+
     public AlbumManager<AlbumDirectory> Manager { get; protected set; }
 
-    public async Task OnGet()
+    public IPagedList<AlbumDirectory>? DirectoryPagedList { get; set; }
+
+    public IPagedList<AlbumImage>? ImagesPagedList { get; set; }
+
+    public async Task<IActionResult> OnGet()
     {
-        var folder = Path.Combine(_environment.WebRootPath, "Images");
-        _logger.LogInformation(folder);
-        Manager = await AlbumManagerBuilder.GetDirectoriesFromFolderTreeAsync(folder);
+        var folderDirectory = Path.Combine(_environment.WebRootPath, "Images");
+        _logger.LogInformation(folderDirectory);
+        Manager = await AlbumManagerBuilder.GetDirectoriesFromFolderTreeAsync(folderDirectory, PageIndex, 10);
 
-        PagedList = Manager.PagedList;
+        DirectoryPagedList = Manager.PagedList;
+
+        if (FolderName == "All")
+        {
+            ImagesPagedList = null;
+
+            return Page();
+        }
+
+        var folderImages = Path.Combine(_environment.WebRootPath, "Images", FolderName!);
+        var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(folderImages, PageIndex2, 1);
+        //Commands = manager.Commands;
+        ImagesPagedList = manager.PagedList;
+
+        return Page();
     }
-
-    public IPagedList<AlbumDirectory>? PagedList { get; set; }
 }
