@@ -58,4 +58,6 @@ public class DeleteImageByIdCommandHandler : ICommandHandler<DeleteImageByIdComm
 
         return false;
     }
+
+
 }

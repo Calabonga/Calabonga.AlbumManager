@@ -51,17 +51,17 @@ public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
     /// Configuration used for files processing
     /// </summary>
     public IConfiguration Configuration { get; }
-    public Task<TResult?> ExecuteAsync<TResult, TCommand>(TCommand command, CancellationToken cancellationToken)
-        where TCommand : ICommand<TResult?>
+    public Task<TResult> ExecuteAsync<TResult, TCommand>(TCommand command, CancellationToken cancellationToken)
+        where TCommand : ICommand<TResult>
     {
         if (Configuration.CommanderConfiguration.CommandProcessor?.GetCommands() is not null)
         {
             Configuration.CommanderConfiguration.CommandProcessor.SetAlbumManager(this);
-            return Configuration.CommanderConfiguration.CommandProcessor.Execute<TResult?, TCommand>(command, cancellationToken);
+            return Configuration.CommanderConfiguration.CommandProcessor.Execute<TResult, TCommand>(command, cancellationToken);
         }
         else
         {
-            return Task.FromResult<TResult?>(default);
+            return Task.FromResult<TResult>(default!);
         }
     }
 }

@@ -7,11 +7,18 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
+<div class="row mb-3">
+    @if (Model.FolderName!="All")
+    {
+        <a class="btn btn-outline-primary"
+            asp-page="UploadFile" asp-route-FolderName="@Model.FolderName">Загрузить в папку @Model.FolderName</a>
+    }
+</div>
 <div class="row">
     <div class="col-3 border">
         @if (Model.DirectoryPagedList is not null && Model.DirectoryPagedList.Items.Any())
         {
+    
             @if (Model.DirectoryPagedList.HasPreviousPage)
             {
                 <div>
@@ -22,9 +29,9 @@
             foreach (var item in Model.DirectoryPagedList.Items)
             {
                 <p>
-                    <a asp-page="Index" 
-                       asp-route-PageIndex="@Model.DirectoryPagedList.PageIndex" 
-                       asp-route-FolderName="@item.Name" 
+                    <a asp-page="Index"
+                       asp-route-PageIndex="@Model.DirectoryPagedList.PageIndex"
+                       asp-route-FolderName="@item.Name"
                        class="text-decoration-none">
                         <span class="display-5 text-uppercase">@item.Name</span>
                         @if (!isSkipped)
@@ -43,22 +50,29 @@
             }
         }
     </div>
-    
+
     <div class="col-9 border">
-        
+
         @if (Model.ImagesPagedList is not null && Model.ImagesPagedList.Items.Any())
         {
+            <div class="row">
+                <div class="col">
+                    Total: @Model.ImagesPagedList.TotalCount
+                </div>
+            </div>
+
             @if (Model.ImagesPagedList.HasPreviousPage)
             {
-                <a class="btn btn-outline-secondary" asp-page="Index" asp-route-PageIndex2="@(Model.ImagesPagedList.PageIndex-1)" asp-route-FolderName="@Model.FolderName">←</a>
+                <a class="btn btn-outline-secondary" asp-page="Index" asp-route-PageIndex2="@(Model.ImagesPagedList.PageIndex - 1)" asp-route-FolderName="@Model.FolderName">←</a>
             }
             else
             {
                 <button class="btn btn-outline-secondary" disabled>←</button>
             }
+
             @if (Model.ImagesPagedList.HasNextPage)
             {
-                <a class="btn btn-outline-secondary" asp-page="Index" asp-route-PageIndex2="@(Model.ImagesPagedList.PageIndex+1)" asp-route-FolderName="@Model.FolderName">→</a>
+                <a class="btn btn-outline-secondary" asp-page="Index" asp-route-PageIndex2="@(Model.ImagesPagedList.PageIndex + 1)" asp-route-FolderName="@Model.FolderName">→</a>
             }
             else
             {
@@ -75,8 +89,9 @@
                 {
                     <h2>@item.Title</h2>
                 }
+
                 <div class="m-2">
-                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.OriginalBytes!)" class="img-fluid" />
+                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(item.OriginalBytes!)" class="img-fluid"/>
                 </div>
 
                 <div class="mt-3">

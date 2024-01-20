@@ -42,6 +42,7 @@ public static class AlbumManagerBuilder
                 {
                     c.AddCommand<GetImageByIdCommand, GetImageByIdCommandHandler>();
                     c.AddCommand<DeleteImageByIdCommand, DeleteImageByIdCommandHandler>();
+                    c.AddCommand<UploadImageByIdCommand, UploadImageByIdCommandHandler>();
                 }));
             })
             .AddUploader<UploaderConfiguration>(_ => { })

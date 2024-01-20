@@ -11,12 +11,12 @@ public class AlbumImage : ItemBase
     public long FileSize { get; set; }
 
     /// <summary>
-    /// Loaded bytes of the image
+    /// Loaded Bytes of the image
     /// </summary>
     public byte[]? OriginalBytes { get; set; }
 
     /// <summary>
-    /// Processed image bytes after processing done.
+    /// Processed image Bytes after processing done.
     /// </summary>
     public byte[]? ProcessedBytes { get; set; }
 
