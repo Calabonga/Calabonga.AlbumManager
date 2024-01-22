@@ -2,7 +2,7 @@
 
 namespace Calabonga.AlbumsManager.CommandProcessors.Commands;
 
-public record UploadImageByIdCommand(byte[] Bytes, string FileName, string ContentType, string FolderName)
+public record UploadImageByIdCommand(byte[] Bytes, string FileName)
     : ICommand<UploadResult>;
 
 public class UploadImageByIdCommandHandler : ICommandHandler<UploadImageByIdCommand, UploadResult>

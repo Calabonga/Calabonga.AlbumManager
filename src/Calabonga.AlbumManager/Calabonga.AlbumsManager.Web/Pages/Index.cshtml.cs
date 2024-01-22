@@ -26,11 +26,17 @@ public class IndexModel : PageModel
     public int PageIndex2 { get; set; }
 
     [BindProperty(SupportsGet = true)]
+    public int PageIndex3 { get; set; }
+
+    [BindProperty(SupportsGet = true)]
     public string? FolderName { get; set; }
 
-    public AlbumManager<AlbumDirectory> Manager { get; protected set; }
+    [BindProperty(SupportsGet = true)]
+    public string? FolderName2 { get; set; }
 
     public IPagedList<AlbumDirectory>? DirectoryPagedList { get; set; }
+
+    public IPagedList<AlbumDirectory>? Directory2PagedList { get; set; }
 
     public IPagedList<AlbumImage>? ImagesPagedList { get; set; }
 
@@ -38,9 +44,9 @@ public class IndexModel : PageModel
     {
         var folderDirectory = Path.Combine(_environment.WebRootPath, "Images");
         _logger.LogInformation(folderDirectory);
-        Manager = await AlbumManagerBuilder.GetDirectoriesFromFolderTreeAsync(folderDirectory, PageIndex, 10);
+        var manager = await AlbumManagerBuilder.GetDirectoriesFromFolderTreeAsync(folderDirectory, PageIndex, 5);
 
-        DirectoryPagedList = Manager.PagedList;
+        DirectoryPagedList = manager.PagedList;
 
         if (FolderName == "All")
         {
@@ -49,10 +55,22 @@ public class IndexModel : PageModel
             return Page();
         }
 
-        var folderImages = Path.Combine(_environment.WebRootPath, "Images", FolderName!);
-        var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(folderImages, PageIndex2, 1);
-        //Commands = manager.Commands;
-        ImagesPagedList = manager.PagedList;
+        var subFolder = Path.Combine(_environment.WebRootPath, "Images", FolderName!);
+        var manager2 = await AlbumManagerBuilder.GetDirectoriesFromFolderTreeAsync(subFolder, PageIndex2, 3);
+
+        Directory2PagedList = manager2.PagedList;
+
+        if (FolderName2 == "All")
+        {
+            ImagesPagedList = null;
+
+            return Page();
+        }
+
+
+        var folderImages = Path.Combine(_environment.WebRootPath, "Images", FolderName!, FolderName2!);
+        var manager3 = await AlbumManagerBuilder.GetImagesFromFolderAsync(folderImages, PageIndex3, 1);
+        ImagesPagedList = manager3.PagedList;
 
         return Page();
     }
@@ -64,14 +82,14 @@ public class IndexModel : PageModel
             return RedirectToPage("Error");
         }
 
-        var folder = Path.Combine(_environment.WebRootPath, "Images", FolderName);
-        var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(folder, PageIndex2, 1);
+        var folderImages = Path.Combine(_environment.WebRootPath, "Images", FolderName!, FolderName2!);
+        var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(folderImages, PageIndex3, 1);
         ImagesPagedList = manager.PagedList;
 
         await manager.ExecuteAsync<bool, DeleteImageByIdCommand>(
             new DeleteImageByIdCommand(fileName),
             HttpContext.RequestAborted);
 
-        return RedirectToPage("Index", new { PageIndex2 = 0 });
+        return RedirectToPage("Index", new { PageIndex3 = 0 });
     }
 }

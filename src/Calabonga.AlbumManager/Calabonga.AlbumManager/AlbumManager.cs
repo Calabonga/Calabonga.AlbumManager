@@ -13,7 +13,6 @@ public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
     where TItem : ItemBase
 {
 
-
     internal AlbumManager(IPagedList<TItem> items, IAlbumBuilder<TItem> albumBuilder, IConfiguration configuration)
     {
         AlbumBuilder = albumBuilder;
@@ -51,6 +50,15 @@ public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
     /// Configuration used for files processing
     /// </summary>
     public IConfiguration Configuration { get; }
+
+    /// <summary>
+    /// // Calabonga: Summary required (AlbumManager 2024-01-22 09:39)
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
+    /// <typeparam name="TCommand"></typeparam>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public Task<TResult> ExecuteAsync<TResult, TCommand>(TCommand command, CancellationToken cancellationToken)
         where TCommand : ICommand<TResult>
     {

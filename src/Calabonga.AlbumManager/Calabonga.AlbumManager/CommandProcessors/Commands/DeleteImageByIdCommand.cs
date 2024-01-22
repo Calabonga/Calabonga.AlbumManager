@@ -51,7 +51,7 @@ public class DeleteImageByIdCommandHandler : ICommandHandler<DeleteImageByIdComm
             }
         }
 
-        catch (Exception exception)
+        catch
         {
             return false;
         }

@@ -30,7 +30,6 @@ internal sealed class FinalBuilder<TItem> : IFinalBuilder<TItem>
         var pageIndex = _configuration.CreatorConfiguration.PageIndex;
         var pageSize = _configuration.CreatorConfiguration.PageSize;
         var items = await _albumBuilder.GetItemsAsync(pageIndex, pageSize, cancellationToken);
-        var manager = new AlbumManager<TItem>(items, _albumBuilder, _configuration);
-        return manager;
+        return new AlbumManager<TItem>(items, _albumBuilder, _configuration);
     }
 }

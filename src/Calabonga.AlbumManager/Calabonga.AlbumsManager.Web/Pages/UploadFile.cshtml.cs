@@ -13,6 +13,10 @@ public class UploadFileModel : PageModel
     [BindProperty(SupportsGet = true)]
     public string? FolderName { get; set; }
 
+
+    [BindProperty(SupportsGet = true)]
+    public string? FolderName2 { get; set; }
+
     [BindProperty]
     public IFormFile? FormFile { get; set; }
 
@@ -36,8 +40,13 @@ public class UploadFileModel : PageModel
                 return Page();
             }
 
-            var folder = FolderName;
-            var subfolder = Path.Combine(_environment.WebRootPath, "Images", folder);
+            if (string.IsNullOrEmpty(FolderName2))
+            {
+                TempData["Message"] = "danger|FolderName2 is not provided";
+                return Page();
+            }
+
+            var subfolder = Path.Combine(_environment.WebRootPath, "Images", FolderName, FolderName2);
 
             using var memoryStream = new MemoryStream();
             await using var stream = FormFile.OpenReadStream();
@@ -45,7 +54,8 @@ public class UploadFileModel : PageModel
             var bytes = memoryStream.ToArray();
 
             var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(subfolder, 0, 10);
-            var command = new UploadImageByIdCommand(bytes, FormFile.FileName, FormFile.ContentType, FolderName);
+            var command = new UploadImageByIdCommand(bytes, FormFile.FileName);
+
             var result = await manager.ExecuteAsync<UploadResult, UploadImageByIdCommand>(command, HttpContext.RequestAborted);
             if (result!.Ok)
             {

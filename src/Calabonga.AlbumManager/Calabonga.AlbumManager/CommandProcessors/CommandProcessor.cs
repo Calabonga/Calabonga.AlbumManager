@@ -6,12 +6,12 @@ namespace Calabonga.AlbumsManager.CommandProcessors;
 /// <summary>
 /// Commands processor inside the <see cref="AlbumManager{TItem}"/>
 /// </summary>
-public class CommandProcessor : ICommandProcessor
+internal class CommandProcessor : ICommandProcessor
 {
     private readonly Dictionary<string, Type> _dictionary = new();
     private IAlbumManager? _albumManager;
 
-    public CommandProcessor(Action<ICommandProcessor> registerCommand) => registerCommand(this);
+    internal CommandProcessor(Action<ICommandProcessor> registerCommand) => registerCommand(this);
 
     /// <summary>
     /// Executes a command registered in <see cref="AlbumManager{TItem}"/>.

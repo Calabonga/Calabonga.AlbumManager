@@ -14,6 +14,17 @@ public interface IAlbumManager
     /// Global interface configuration for &lt;see cref="AlbumManager{TItem}"/&gt; processing pipelines.
     /// </summary>
     IConfiguration Configuration { get; }
+
+    /// <summary>
+    /// // Calabonga: Summary required (IAlbumManager 2024-01-22 09:40)
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
+    /// <typeparam name="TCommand"></typeparam>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<TResult> ExecuteAsync<TResult, TCommand>(TCommand command, CancellationToken cancellationToken)
+        where TCommand : ICommand<TResult>;
 }
 
 /// <summary>
@@ -23,6 +34,7 @@ public interface IAlbumManager
 public interface IAlbumManager<TItem> : IAlbumManager
     where TItem : ItemBase
 {
+
     /// <summary>
     /// PagedList in <see cref="AlbumManager{TItem}"/> founded for managing.
     /// </summary>
