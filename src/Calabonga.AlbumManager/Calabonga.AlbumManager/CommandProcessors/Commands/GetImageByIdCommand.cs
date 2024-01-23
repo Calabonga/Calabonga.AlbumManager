@@ -1,34 +1,49 @@
 ﻿using Calabonga.AlbumsManager.Base;
 using Calabonga.AlbumsManager.Models;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Calabonga.AlbumsManager.CommandProcessors.Commands;
-
-/// <summary>
-/// Command for getting item by identifier (for example, <see cref="ItemBase.Name"/>)
-/// </summary>
-public record GetImageByIdCommand(string ImageName) : ICommand<AlbumImage?>;
-
-/// <summary>
-/// CommandHandler for getting item by identifier (for example, <see cref="ItemBase.Name"/>)
-/// </summary>
-public class GetImageByIdCommandHandler : ICommandHandler<GetImageByIdCommand, AlbumImage?>
+namespace Calabonga.AlbumsManager.CommandProcessors.Commands
 {
     /// <summary>
-    /// Command handler
+    /// Command for getting item by identifier (for example, <see cref="ItemBase.Name"/>)
     /// </summary>
-    /// <param name="command"></param>
-    /// <param name="context"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    public Task<AlbumImage?> Handle(GetImageByIdCommand command, ICommandContext context, CancellationToken cancellationToken = default)
+    public class GetImageByIdCommand : ICommand<AlbumImage?>
     {
-        var albumManager = context.AlbumManager;
+        /// <summary>
+        /// Command for getting item by identifier (for example, <see cref="ItemBase.Name"/>)
+        /// </summary>
+        public GetImageByIdCommand(string imageName)
+        {
+            ImageName = imageName;
+        }
 
-        var item = ((IAlbumManager<AlbumImage>)albumManager!)
-            .PagedList
-            .Items
-            .SingleOrDefault(x => x.Name == command.ImageName);
+        public string ImageName { get; }
+    }
 
-        return Task.FromResult(item);
+    /// <summary>
+    /// CommandHandler for getting item by identifier (for example, <see cref="ItemBase.Name"/>)
+    /// </summary>
+    public class GetImageByIdCommandHandler : ICommandHandler<GetImageByIdCommand, AlbumImage?>
+    {
+        /// <summary>
+        /// Command handler
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="context"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public Task<AlbumImage?> Handle(GetImageByIdCommand command, ICommandContext context, CancellationToken cancellationToken = default)
+        {
+            var albumManager = context.AlbumManager;
+
+            var item = ((IAlbumManager<AlbumImage>)albumManager!)
+                .PagedList
+                .Items
+                .SingleOrDefault(x => x.Name == command.ImageName);
+
+            return Task.FromResult(item);
+        }
     }
 }
