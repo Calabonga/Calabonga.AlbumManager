@@ -27,8 +27,7 @@ public class CommandProcessor : ICommandProcessor
         _dictionary.TryGetValue(typeof(TCommand).Name, out var type);
         if (type is null)
         {
-            // Calabonga: required some logging (CommandProcessor 2023-12-18 08:24)
-            throw new NotImplementedException();
+            throw new ArgumentNullException(nameof(command), $"There are no handlers found for {typeof(TCommand).Name}.");
         }
 
         var handler = (ICommandHandler<TCommand, TResult>)Activator.CreateInstance(type)!;

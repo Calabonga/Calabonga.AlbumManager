@@ -8,8 +8,15 @@ namespace Calabonga.AlbumsManager.Configurations;
 /// </summary>
 public class MetadataConfiguration : IMetadataConfiguration
 {
+    /// <summary>
+    /// Instance of the <see cref="IMetadataProcessor"/>
+    /// </summary>
     public IMetadataProcessor? MetadataProcessor { get; private set; }
 
+    /// <summary>
+    /// Setups <see cref="IMetadataProcessor"/> for current AlbumManagedBuilder.
+    /// </summary>
+    /// <param name="metadataProcessor"></param>
     public void SetMetadataProcessor(IMetadataProcessor metadataProcessor)
         => MetadataProcessor = metadataProcessor;
 }

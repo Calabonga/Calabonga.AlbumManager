@@ -5,7 +5,7 @@ using Calabonga.AlbumsManager.Models;
 namespace Calabonga.AlbumsManager.Builders;
 
 /// <summary>
-/// // Calabonga: update summary (2023-11-11 12:17 AlbumManagerUploaderBuilder)
+/// Uploader configuration builder
 /// </summary>
 internal sealed class UploaderBuilder<TItem> : IUploaderBuilder<TItem>
     where TItem : ItemBase
@@ -19,7 +19,12 @@ internal sealed class UploaderBuilder<TItem> : IUploaderBuilder<TItem>
         _albumBuilder = albumBuilder;
     }
 
+    /// <summary>
+    /// Adds <see cref="IUploaderConfiguration"/> to processor pipeline.
+    /// </summary>
+    /// <param name="configuration">configuration to apply</param>
     public IFinalBuilder<TItem> AddUploader<TUploaderConfiguration>(Action<TUploaderConfiguration> configuration)
+        where TUploaderConfiguration : IUploaderConfiguration
     {
         configuration((TUploaderConfiguration)_configuration.UploaderConfiguration);
         return new FinalBuilder<TItem>(_configuration, _albumBuilder);

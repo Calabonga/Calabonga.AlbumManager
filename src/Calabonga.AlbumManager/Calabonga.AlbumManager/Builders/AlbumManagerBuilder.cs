@@ -14,6 +14,11 @@ public sealed class AlbumManagerBuilder<TCreator, TConfiguration, TItem>
 {
     private IAlbumBuilder<TItem> _albumBuilder = null!;
 
+    /// <summary>
+    /// Adds to pipeline an instance of the <see cref="ICreatorConfiguration"/>.
+    /// </summary>
+    /// <typeparam name="TCreatorConfiguration"></typeparam>
+    /// <param name="configuration"></param>
     public IViewerBuilder<TItem> AddCreator<TCreatorConfiguration>(Action<TCreatorConfiguration> configuration)
         where TCreatorConfiguration : ICreatorConfiguration
     {

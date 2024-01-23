@@ -20,12 +20,15 @@ public class CreatorConfiguration : ICreatorConfiguration
     /// <summary>
     /// Pattern for files search
     /// </summary>
-    public string SearchFilePattern => "*.png;*.jpg";
+    public string SearchFilePattern => "*.png;*.jpg;*.jpeg;*.gif";
 
     /// <summary>
     /// Source where images live
     /// </summary>
     public string SourcePath { get; set; } = null!;
 
+    /// <summary>
+    /// Indicates that processor does not search a files in folder.
+    /// </summary>
     public bool SkipFoundImages { get; set; }
 }

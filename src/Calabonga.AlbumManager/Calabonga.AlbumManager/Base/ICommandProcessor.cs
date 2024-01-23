@@ -1,5 +1,4 @@
-﻿using Calabonga.AlbumsManager.CommandProcessors;
-using Calabonga.AlbumsManager.Models;
+﻿using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager.Base;
 

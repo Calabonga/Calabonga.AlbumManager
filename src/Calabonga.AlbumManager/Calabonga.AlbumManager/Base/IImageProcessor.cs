@@ -1,4 +1,5 @@
-﻿using Calabonga.AlbumsManager.Models;
+﻿using Calabonga.AlbumsManager.Base.Configurations;
+using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager.Base;
 
@@ -11,5 +12,6 @@ public interface IImageProcessor
     /// Execute processing for <see cref="AlbumImage"/>.
     /// </summary>
     /// <param name="imageInfo"></param>
-    Task ProcessAsync(AlbumImage imageInfo);
+    /// <param name="viewerConfiguration"></param>
+    Task ProcessAsync(AlbumImage imageInfo, IViewerConfiguration viewerConfiguration);
 }

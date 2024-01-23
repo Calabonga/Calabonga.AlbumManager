@@ -1,9 +1,10 @@
-﻿using Calabonga.AlbumsManager.Builders;
+﻿using Calabonga.AlbumsManager.Base;
+using Calabonga.AlbumsManager.Builders;
 using Calabonga.AlbumsManager.CommandProcessors;
-using Calabonga.AlbumsManager.CommandProcessors.Commands;
 using Calabonga.AlbumsManager.Configurations;
-using Calabonga.AlbumsManager.Folder.Creator;
-using Calabonga.AlbumsManager.FolderTree.Creator;
+using Calabonga.AlbumsManager.Creators;
+using Calabonga.AlbumsManager.ImageProcessors;
+using Calabonga.AlbumsManager.MetadataProcessors;
 using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager;
@@ -19,8 +20,15 @@ public static class AlbumManagerBuilder
     /// <param name="folder">The folder contains images.</param>
     /// <param name="pageIndex">The page index for pagination. If the <see cref="pageSize"/> is equals 0 then paging ignored. Default value is 0.</param> 
     /// <param name="pageSize">The number items in the page. When it is equals 0 then paging ignored. Default value is 0.</param>
+    /// <param name="commandProcessor"></param>
+    /// <param name="watermarkText"></param>
     /// <returns>an instance of the <see cref="AlbumManager{TItem}"/></returns>
-    public static async Task<AlbumManager<AlbumImage>> GetImagesFromFolderAsync(string folder, int pageIndex, int pageSize)
+    public static async Task<AlbumManager<AlbumImage>> GetImagesFromFolderAsync(
+        string folder,
+        int pageIndex,
+        int pageSize,
+        Action<ICommandProcessor>? commandProcessor = null,
+        string? watermarkText = null)
         => await new AlbumManagerBuilder<FolderAlbumBuilder, DefaultConfiguration, AlbumImage>()
             .AddCreator<CreatorConfiguration>(x =>
             {
@@ -30,20 +38,21 @@ public static class AlbumManagerBuilder
             })
             .AddViewer<ViewerConfiguration>(x =>
             {
-                //x.AddImageProcessor(new TextWatermarkImageProcessor());
+                if (!string.IsNullOrEmpty(watermarkText))
+                {
+                    x.AddImageProcessor(new TextWatermarkImageProcessor(watermarkText));
+                }
             })
             .AddMetadataReader<MetadataConfiguration>(x =>
             {
-                //x.SetMetadataProcessor(new TextMetadataProcessor());
+                x.SetMetadataProcessor(new TextMetadataProcessor());
             })
             .AddCommander<CommanderConfiguration>(x =>
             {
-                x.SetCommandProcessor(new CommandProcessor(c =>
+                if (commandProcessor is not null)
                 {
-                    c.AddCommand<GetImageByIdCommand, GetImageByIdCommandHandler>();
-                    c.AddCommand<DeleteImageByIdCommand, DeleteImageByIdCommandHandler>();
-                    c.AddCommand<UploadImageByIdCommand, UploadImageByIdCommandHandler>();
-                }));
+                    x.SetCommandProcessor(new CommandProcessor(commandProcessor));
+                }
             })
             .AddUploader<UploaderConfiguration>(_ => { })
             .BuildAsync(CancellationToken.None);
