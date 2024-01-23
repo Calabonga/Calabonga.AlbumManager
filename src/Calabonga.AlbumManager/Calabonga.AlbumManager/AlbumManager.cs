@@ -51,13 +51,41 @@ public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
     /// Configuration used for files processing
     /// </summary>
     public IConfiguration Configuration { get; }
+
+    /// <summary>
+    /// Execute command in current <see cref="AlbumBuilder"/> pipeline.
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
+    /// <typeparam name="TCommand"></typeparam>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public Task<TResult> ExecuteAsync<TResult, TCommand>(TCommand command, CancellationToken cancellationToken)
         where TCommand : ICommand<TResult>
     {
         if (Configuration.CommanderConfiguration.CommandProcessor?.GetCommands() is not null)
         {
+
+
             Configuration.CommanderConfiguration.CommandProcessor.SetAlbumManager(this);
             return Configuration.CommanderConfiguration.CommandProcessor.Execute<TResult, TCommand>(command, cancellationToken);
+        }
+        else
+        {
+            return Task.FromResult<TResult>(default!);
+        }
+    }
+
+    public Task<TResult> ExecuteAsync<TResult>(string commandName, CancellationToken cancellationToken)
+    {
+        var commands = Configuration.CommanderConfiguration.CommandProcessor?.GetCommands()?.ToList() ?? new List<string>();
+        if (commands.Any())
+        {
+            Configuration.CommanderConfiguration.CommandProcessor!.SetAlbumManager(this);
+
+            var command = commands.FirstOrDefault(x => x.GetType().Name == commandName);
+            return Configuration.CommanderConfiguration.CommandProcessor.Execute<TResult>(command, cancellationToken);
+
         }
         else
         {

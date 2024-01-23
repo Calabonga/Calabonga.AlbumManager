@@ -1,6 +1,6 @@
 ﻿using Calabonga.AlbumsManager.Builders;
 using Calabonga.AlbumsManager.Configurations;
-using Calabonga.AlbumsManager.Folder.Creator;
+using Calabonga.AlbumsManager.Creators;
 using Calabonga.AlbumsManager.Models;
 
 //builder.AddCreator<FolderTreeAlbumCreator, FolderTreeAlbumCreatorConfiguration>(x => x.SourceRootPath = "C:\\Projects\\Calabonga.AlbumManager\\whatnot\\Gallery");

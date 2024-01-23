@@ -10,5 +10,9 @@ public interface IViewerConfiguration
     /// </summary>
     IEnumerable<IImageProcessor> ImageProcessors { get; }
 
+    /// <summary>
+    /// Setups an instance of the <see cref="IImageProcessor"/> for current <see cref="AlbumManagerBuilder"/>.
+    /// </summary>
+    /// <param name="processor"></param>
     void AddImageProcessor(IImageProcessor processor);
 }

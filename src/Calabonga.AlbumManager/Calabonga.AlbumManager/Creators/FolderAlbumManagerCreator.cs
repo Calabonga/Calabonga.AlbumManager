@@ -3,7 +3,7 @@ using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Models;
 using Calabonga.PagedListCore;
 
-namespace Calabonga.AlbumsManager.Folder.Creator;
+namespace Calabonga.AlbumsManager.Creators;
 
 /// <summary>
 /// AlbumManager for folder with images.
@@ -21,29 +21,24 @@ public sealed class FolderAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, 
     {
         if (Configuration.CreatorConfiguration.PageSize <= 0)
         {
-            // Calabonga: page size not provided (FolderAlbumManagerCreator 2024-01-16 08:52)
             return Task.FromResult(PagedList.Empty<AlbumImage>());
         }
 
         if (!Path.Exists(Configuration.CreatorConfiguration.SourcePath))
         {
-            // Calabonga: log info about no path found (2023-10-28 11:03 FolderAlbumCreator)
             return Task.FromResult(PagedList.Empty<AlbumImage>());
         }
 
         var directory = new DirectoryInfo(Configuration.CreatorConfiguration.SourcePath);
         var types = string.IsNullOrEmpty(Configuration.CreatorConfiguration.SearchFilePattern)
-            ? new[] { "*.png;", "*.jpg" }
+            ? new[] { "*.png;", "*.jpg", "*.jpeg", "*.gif" }
             : Configuration.CreatorConfiguration.SearchFilePattern.Split(';');
 
         var files = types.SelectMany(x => directory.GetFiles(x)).ToList();
 
         var pageIndex = Configuration.CreatorConfiguration.PageIndex;
         var pageSize = Configuration.CreatorConfiguration.PageSize;
-
-        //var pagedFiles = new PagedList<FileInfo>(files, pageIndex, pageSize, 0, files.Count);
         var pagedFiles = PagedList.Create(files, pageIndex, pageSize == 0 ? 10 : pageSize, 0);
-
         var result = PagedList.From(pagedFiles, x => ConvertItems(x, directory));
 
         return Task.FromResult(result);

@@ -4,7 +4,6 @@ using Calabonga.AlbumsManager.Models;
 
 namespace Calabonga.AlbumsManager.Builders;
 
-
 /// <summary>
 /// Default implementation final builder for configuration final step.
 /// </summary>

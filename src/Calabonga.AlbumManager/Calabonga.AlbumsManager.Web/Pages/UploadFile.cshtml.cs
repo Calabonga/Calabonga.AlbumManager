@@ -1,4 +1,5 @@
-﻿using Calabonga.AlbumsManager.CommandProcessors.Commands;
+﻿using Calabonga.AlbumsManager.CommandProcessors;
+using Calabonga.AlbumsManager.CommandProcessors.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -44,8 +45,16 @@ public class UploadFileModel : PageModel
             await stream.CopyToAsync(memoryStream, HttpContext.RequestAborted);
             var bytes = memoryStream.ToArray();
 
-            var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(subfolder, 0, 10);
-            var command = new UploadImageByIdCommand(bytes, FormFile.FileName, FormFile.ContentType, FolderName);
+            var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(subfolder, 0, 10,
+                commandProcessor =>
+                {
+                    commandProcessor.AddCommand<GetImageByIdCommand, GetImageByIdCommandHandler>();
+                    commandProcessor.AddCommand<DeleteImageByIdCommand, DeleteImageByIdCommandHandler>();
+                    commandProcessor.AddCommand<UploadImageByIdCommand, UploadImageByIdCommandHandler>();
+                });
+
+            var command = new UploadImageByIdCommand(bytes, FormFile.FileName);
+
             var result = await manager.ExecuteAsync<UploadResult, UploadImageByIdCommand>(command, HttpContext.RequestAborted);
             if (result!.Ok)
             {

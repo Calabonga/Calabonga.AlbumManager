@@ -11,7 +11,7 @@ public interface ICreatorConfiguration
     int PageIndex { get; }
 
     /// <summary>
-    /// Current page size
+    /// Current page size. If not provided then no paging enabled.
     /// </summary>
     int PageSize { get; }
 

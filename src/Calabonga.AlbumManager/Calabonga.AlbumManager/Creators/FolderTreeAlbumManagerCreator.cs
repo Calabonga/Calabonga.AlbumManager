@@ -3,14 +3,15 @@ using Calabonga.AlbumsManager.Configurations;
 using Calabonga.AlbumsManager.Models;
 using Calabonga.PagedListCore;
 
-namespace Calabonga.AlbumsManager.FolderTree.Creator;
+namespace Calabonga.AlbumsManager.Creators;
 
+/// <summary>
+/// Default <see cref="AlbumManagerBuilder"/> that used for hierarchical structures (folders with images or folders with folders).
+/// </summary>
 public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfiguration, AlbumDirectory>
 {
     public FolderTreeAlbumBuilder(DefaultConfiguration configuration)
-        : base(configuration)
-    {
-    }
+        : base(configuration) { }
 
     /// <summary>
     /// Returns items that was found in the folder
@@ -23,17 +24,14 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
     {
         if (!Path.Exists(Configuration.CreatorConfiguration.SourcePath))
         {
-            // Calabonga: log info about no path found (2023-10-28 11:03 FolderAlbumCreator)
             return PagedList.Empty<AlbumDirectory>();
         }
 
         var directoryInfo = new DirectoryInfo(Configuration.CreatorConfiguration.SourcePath);
-
         var directories = directoryInfo.GetDirectories().ToList();
 
         if (!directories.Any())
         {
-            // Calabonga: log directories not found or empty (2023-11-04 09:24 FolderTreeAlbumCreator)
             return PagedList.Empty<AlbumDirectory>();
         }
 
@@ -56,13 +54,11 @@ public sealed class FolderTreeAlbumBuilder : AlbumBuilderBase<DefaultConfigurati
 
     private IEnumerable<AlbumDirectory> ConvertItemsToDirectoryWithFiles(IEnumerable<DirectoryInfo> directories)
     {
-
         foreach (var directory in directories)
         {
             var fileInfos = directory.GetFiles();
             if (fileInfos.Any())
             {
-                // Calabonga: log files not found or empty (2023-11-04 09:24 FolderTreeAlbumCreator)
                 yield return new AlbumDirectory
                 {
                     Description = $"Files found {fileInfos.Length}",
