@@ -45,8 +45,4 @@ public class ErrorUploadResult : UploadResult
 {
     public ErrorUploadResult(string error) => Error = error;
 }
-public class SuccessUploadResult : UploadResult
-{
-    public SuccessUploadResult() { }
-
-}
+public class SuccessUploadResult : UploadResult { }
