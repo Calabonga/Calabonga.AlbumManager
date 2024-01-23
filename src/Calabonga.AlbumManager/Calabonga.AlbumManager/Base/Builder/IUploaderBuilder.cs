@@ -1,18 +1,20 @@
 ﻿using Calabonga.AlbumsManager.Base.Configurations;
 using Calabonga.AlbumsManager.Models;
+using System;
 
-namespace Calabonga.AlbumsManager.Base.Builder;
-
-/// <summary>
-/// Interface for Uploads configuration settings
-/// </summary>
-/// <typeparam name="TItem"></typeparam>
-public interface IUploaderBuilder<TItem> where TItem : ItemBase
+namespace Calabonga.AlbumsManager.Base.Builder
 {
     /// <summary>
-    /// Adds <see cref="IUploaderConfiguration"/> to processor pipeline.
+    /// Interface for Uploads configuration settings
     /// </summary>
-    /// <param name="configuration">configuration to apply</param>
-    IFinalBuilder<TItem> AddUploader<TUploaderConfiguration>(Action<TUploaderConfiguration> configuration)
-        where TUploaderConfiguration : IUploaderConfiguration;
+    /// <typeparam name="TItem"></typeparam>
+    public interface IUploaderBuilder<TItem> where TItem : ItemBase
+    {
+        /// <summary>
+        /// Adds <see cref="IUploaderConfiguration"/> to processor pipeline.
+        /// </summary>
+        /// <param name="configuration">configuration to apply</param>
+        IFinalBuilder<TItem> AddUploader<TUploaderConfiguration>(Action<TUploaderConfiguration> configuration)
+            where TUploaderConfiguration : IUploaderConfiguration;
+    }
 }

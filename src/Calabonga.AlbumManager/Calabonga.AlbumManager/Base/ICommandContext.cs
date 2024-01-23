@@ -1,12 +1,13 @@
-﻿namespace Calabonga.AlbumsManager.Base;
-
-/// <summary>
-/// Context for command execution
-/// </summary>
-public interface ICommandContext
+﻿namespace Calabonga.AlbumsManager.Base
 {
     /// <summary>
-    /// Active instance of the <see cref="AlbumManager"/>
+    /// Context for command execution
     /// </summary>
-    IAlbumManager? AlbumManager { get; }
+    public interface ICommandContext
+    {
+        /// <summary>
+        /// Active instance of the <see cref="AlbumManager"/>
+        /// </summary>
+        IAlbumManager? AlbumManager { get; }
+    }
 }

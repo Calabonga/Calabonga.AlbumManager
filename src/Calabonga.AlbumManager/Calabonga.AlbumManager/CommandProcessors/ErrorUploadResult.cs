@@ -1,9 +1,10 @@
-﻿namespace Calabonga.AlbumsManager.CommandProcessors.Commands;
-
-/// <summary>
-/// Uploading operation result with error.
-/// </summary>
-public class ErrorUploadResult : UploadResult
+﻿namespace Calabonga.AlbumsManager.CommandProcessors.Commands
 {
-    public ErrorUploadResult(string error) => Error = error;
+    /// <summary>
+    /// Uploading operation result with error.
+    /// </summary>
+    public class ErrorUploadResult : UploadResult
+    {
+        public ErrorUploadResult(string error) => Error = error;
+    }
 }
