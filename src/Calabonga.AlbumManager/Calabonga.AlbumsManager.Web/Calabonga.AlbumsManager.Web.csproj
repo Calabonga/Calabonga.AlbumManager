@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Calabonga.AlbumManager\Calabonga.AlbumsManager.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Images\" />
-  </ItemGroup>
-
 </Project>
