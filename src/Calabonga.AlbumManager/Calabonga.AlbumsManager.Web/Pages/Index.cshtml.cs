@@ -51,7 +51,7 @@ public class IndexModel : PageModel
 
         var folderImages = Path.Combine(_environment.WebRootPath, "Images", FolderName!);
         var manager = await AlbumManagerBuilder.GetImagesFromFolderAsync(folderImages, PageIndex2, 1);
-        //Commands = manager.Commands;
+
         ImagesPagedList = manager.PagedList;
 
         return Page();
