@@ -7,14 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calabonga.AlbumsManager", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calabonga.AlbumsManager.ConsoleApp", "Calabonga.AlbumManager.ConsoleApp\Calabonga.AlbumsManager.ConsoleApp.csproj", "{01FCC9DB-370F-4523-9E69-DDA832112B94}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9C28C301-0205-4C3A-92E4-EB10F85EC46D}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\.gitignore = ..\..\.gitignore
-		..\..\LICENSE = ..\..\LICENSE
-		..\..\README.md = ..\..\README.md
-		..\..\TODO.md = ..\..\TODO.md
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calabonga.AlbumsManager.Web", "Calabonga.AlbumsManager.Web\Calabonga.AlbumsManager.Web.csproj", "{D95DE0B9-E040-41AC-BB53-0B5745D4E291}"
 EndProject
 Global
