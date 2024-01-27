@@ -1,13 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<Nullable>enable</Nullable>
+		<Version>1.0.0-beta.1</Version>
+		<Authors>Calabonga</Authors>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Calabonga.AlbumManager</Title>
+		<Description>Viewer, uploader, metadata reader for Images in folder on your ASP.NET Core site.</Description>
+		<Company>Calabonga SOFT</Company>
+		<Copyright>Calabonga SOFT © 2001-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/Calabonga/Calabonga.AlbumManager</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/Calabonga/Calabonga.AlbumManager</PackageProjectUrl>
+		<PackageTags>calabonga;asnetcore;photo;manager;AlbumManager;csharp;</PackageTags>
+		<PackageReleaseNotes>First release</PackageReleaseNotes>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Calabonga.PagedListCore" Version="1.0.4" />
-    <PackageReference Include="SkiaSharp" Version="2.88.7" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Calabonga.PagedListCore" Version="1.0.4" />
+		<PackageReference Include="SkiaSharp" Version="2.88.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="logo.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
 
 </Project>
