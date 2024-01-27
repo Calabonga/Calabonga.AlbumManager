@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Calabonga.AlbumsManager" Version="1.0.0-beta.1" />
+    <PackageReference Include="Calabonga.AlbumsManager" Version="1.0.0" />
   </ItemGroup>
 
 
