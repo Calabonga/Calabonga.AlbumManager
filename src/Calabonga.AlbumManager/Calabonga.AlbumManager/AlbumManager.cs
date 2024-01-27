@@ -16,8 +16,6 @@ namespace Calabonga.AlbumsManager
     public sealed class AlbumManager<TItem> : IAlbumManager<TItem>
         where TItem : ItemBase
     {
-
-
         internal AlbumManager(IPagedList<TItem> items, IAlbumBuilder<TItem> albumBuilder, IConfiguration configuration)
         {
             AlbumBuilder = albumBuilder;
@@ -25,6 +23,9 @@ namespace Calabonga.AlbumsManager
             PagedList = items;
         }
 
+        /// <summary>
+        /// Returns a list of commands registered in current <see cref="AlbumBuilder"/>
+        /// </summary>
         public IEnumerable<string> Commands
             => Configuration.CommanderConfiguration.CommandProcessor?.GetCommands()
                ?? Enumerable.Empty<string>();
@@ -67,15 +68,14 @@ namespace Calabonga.AlbumsManager
         public Task<TResult> ExecuteAsync<TResult, TCommand>(TCommand command, CancellationToken cancellationToken)
             where TCommand : ICommand<TResult>
         {
-            if (Configuration.CommanderConfiguration.CommandProcessor?.GetCommands() != null)
-            {
-                Configuration.CommanderConfiguration.CommandProcessor.SetAlbumManager(this);
-                return Configuration.CommanderConfiguration.CommandProcessor.Execute<TResult, TCommand>(command, cancellationToken);
-            }
-            else
+            if (Configuration.CommanderConfiguration.CommandProcessor?.GetCommands() == null)
             {
                 return Task.FromResult<TResult>(default!);
             }
+
+            Configuration.CommanderConfiguration.CommandProcessor.SetAlbumManager(this);
+            return Configuration.CommanderConfiguration.CommandProcessor.Execute<TResult, TCommand>(command, cancellationToken);
+
         }
     }
 }

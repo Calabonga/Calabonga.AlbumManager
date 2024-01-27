@@ -1,6 +1,5 @@
 ﻿using Calabonga.AlbumsManager.Base;
 using Calabonga.AlbumsManager.Models;
-using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +20,6 @@ namespace Calabonga.AlbumsManager.MetadataProcessors
         /// <param name="cancellationToken"></param>
         public override async Task FindDataProcessAsync(AlbumImage item, CancellationToken cancellationToken)
         {
-            item.Description += " >>>>> METADATA";
             var textFilePath = Path.Combine(item.Path, Path.GetFileNameWithoutExtension(item.Name) + ".txt");
             if (!File.Exists(textFilePath))
             {
@@ -57,18 +55,10 @@ namespace Calabonga.AlbumsManager.MetadataProcessors
 
                 return Task.FromResult(DeleteResult.Deleted);
             }
-            catch (Exception exception)
+            catch
             {
                 return Task.FromResult(DeleteResult.Error);
             }
         }
-
-    }
-    public enum DeleteResult
-    {
-        None,
-        NotFound,
-        Deleted,
-        Error
     }
 }
