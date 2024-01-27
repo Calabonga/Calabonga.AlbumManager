@@ -86,3 +86,5 @@
 13. [Фотоальбом на C# (часть 13)](https://www.calabonga.net/blog/post/photoalbum-csharp-13)
 14. [Фотоальбом на C# (часть 14)](https://www.calabonga.net/blog/post/photoalbum-csharp-14)
 15. [Фотоальбом на C# (часть 15)](https://www.calabonga.net/blog/post/photoalbum-csharp-15)
+16. [Фотоальбом на C# (часть 16)](https://www.calabonga.net/blog/post/photoalbum-csharp-16)
+17. [Фотоальбом на C# (часть 17)](https://www.calabonga.net/blog/post/photoalbum-csharp-17)
